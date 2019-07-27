@@ -1,0 +1,152 @@
+*{
+    margin: 0;padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+/* header css */
+
+.header{
+    width: 100%;
+    background-color: #FF5E00;
+    height:4rem;
+}
+.header > .xiami_icon {
+    background-image: url(http://gw.alicdn.com/tps/TB1VRVNKFXXXXXsXpXXXXXXXXXX-426-84.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 16rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    height: 2rem;
+    display: block;
+    float: left;
+}
+.header > .xiami_download {
+    background-image: url(http://gw.alicdn.com/tps/TB1qd4KKFXXXXb1XpXXXXXXXXXX-216-64.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 8rem;
+    margin-top: 1.1rem;
+    margin-right: 1rem;
+    height: 2rem;
+    display: block; 
+    float: right;
+}
+
+/* main css */
+
+main{
+    display: flex;
+    flex-grow: 1;
+}
+main > .slide{
+   width: 20%;
+   min-width: 220px;
+   display: flex;
+   flex-direction: column;
+}
+main > .content{
+    flex-grow: 1;
+}
+
+/* slide css */
+
+main > .slide > .songlist{
+    flex-grow: 1;
+    border-right: 0.5px solid  #e0e0e0;
+}
+main > .slide > .newSong-wrap > .newSong{
+    text-align: center;
+    padding: 1rem 2rem;
+    color: #262b2f;
+    border-bottom: 2px solid  #e0e0e0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+main > .slide > .newSong-wrap  > .active{
+    background-color:  rgba(245, 245, 245, 0.89) ;
+    border-right:  rgba(245, 245, 245, 0.89);
+}
+main > .slide > .songlist > ul > .active{
+    background-color:  rgba(245, 245, 245, 0.89) ;
+    border-right:  rgba(245, 245, 245, 0.89);
+}
+main > .slide > .songlist > ul > li{
+    padding: 0.8rem 1.5rem;
+    background-color:rgba(255, 254, 254, 0.8); 
+    color: #262b2f;
+    border-bottom: 0.5px solid  #e0e0e0;
+    font-size: 0.7rem;
+    transition: all .5s;
+    cursor: pointer;
+    border-right: 0.5px solid  #e0e0e0;
+}
+main > .slide > .songlist > ul > li:hover{
+    background-color:  rgba(245, 245, 245, 0.89)
+}
+main > .slide > .upload{
+    flex-grow: 1;
+}
+
+
+/* upload css */
+
+#upsong-wrap{
+    padding: 20px 30px;
+    border: 2px dashed #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 10px;
+    flex-direction: column;
+}
+#upsong-wrap>p{
+    cursor: pointer;
+}
+#upButton{
+    cursor: pointer;
+}
+
+/* content css */
+main > .content{
+    background-color:  rgba(245, 245, 245, 0.89);
+}
+main > .content > .songinfo {
+    margin: 50px 100px;
+}
+main > .content > .songinfo > h2{
+    margin: 30px 10px;
+}
+main > .content > .songinfo > .row{
+    margin:20px 10px; 
+}
+input[type=text]{
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    outline: none;
+    margin-left: 10px;
+}
+input[type=button]{
+    padding: 4px 50px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    outline: none;
+    cursor: pointer;
+    margin-left: 55px;
+    background-color: #fff;
+    transition: all .5s;
+}
+input[type=button]:hover{
+    background-color:  rgba(185, 185, 185, 0.89)
+}
