@@ -62,9 +62,10 @@
                         // 每个文件上传前,处理相关的事情
                     },
                     'UploadProgress': function(up, file) {
-                        // 每个文件上传时,处理相关的事情
+                        window.eventHub.emmit('loading');
                     },
                     'FileUploaded': function(up, file, info) {
+                        window.eventHub.emmit('loaded');
                         var domain = up.getOption('domain');
                         var res = JSON.parse(info.response);
                         var sourceLink ='http://'+ domain +'/'+ encodeURIComponent(res.key);
@@ -74,6 +75,7 @@
                             singer:'',
                             id:''
                         });
+
                     },
                     'Error': function(up, err, errTip) {
                         //上传出错时,处理相关的事情
