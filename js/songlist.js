@@ -7,30 +7,51 @@
         `,
         render(data){          
             $(this.el).html(this.template);
-            let liArr=data.join(" ");
-            $(this.el+">ul").append(liArr);
+            let {songs}=data;
+            let liList=[];
+            for(let i=0;i<songs.length;i++){
+                liList.push( $('<li></li>').text(songs[i].name));
+            }
+            $(this.el+">ul").empty();
+            liList.map((domLi)=>{
+                $(this.el+">ul").append(domLi);
+            })
         } 
     }
 
     let model={
-        data:[],
+        data:{
+            songs:[]
+        },
+        getSong(){
+            var query = new AV.Query('Music');
+            return query.find().then((songs)=>{
+                this.data.songs=songs.map((song)=>{
+                    return {id:song.id, ...song.attributes}
+                });
+                return songs;
+            });
+        }
     }
 
     let controler={
         init(view,model){
             this.view = view;
             this.model = model;
+            this.model.getSong().then(()=>{
+                this.view.render(this.model.data);
+            });
             this.view.render(this.model.data);
             window.eventHub.on('upload',(data)=>{
-                console.log('songlist得到的数据');
-                console.log(data);
+                $(this.view.el).find('.active').removeClass('active');
+            });
+            window.eventHub.on('newSongClick',(data)=>{
+                $(this.view.el).find('.active').removeClass('active');
             });
             window.eventHub.on('saveSong',(data)=>{
-                console.log(data);
-                let li='<li>'+data.songName+'</li>';
-                this.model.data.push(li);
+                this.model.data.songs.push(data);
                 this.view.render(this.model.data);
-            })
+            });
             this.eventListener();
         },
         eventListener(){
@@ -41,7 +62,14 @@
                     e.currentTarget.parentNode.children[i].classList.remove("active");
                 }      
                 e.currentTarget.classList.add("active");
-                
+                let chosenSong={};
+                for(let i=0;i<this.model.data.songs.length;i++){
+                    if(this.model.data.songs[i].name===e.currentTarget.innerHTML){
+                        chosenSong=this.model.data.songs[i];
+                        break;
+                    }
+                }
+                window.eventHub.emmit('songchosen',chosenSong);
             })
         }
 

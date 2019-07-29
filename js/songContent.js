@@ -27,14 +27,15 @@
             var music = new Music();
 
             // 为属性赋值
-            music.set('name', data.songName);
+            music.set('name', data.name);
             music.set('singer', data.singer);
-            music.set('link',data.songLink);
+            music.set('link',data.link);
 
             // 将对象保存到云端
             music.save().then(function (newMusic) {
             // 成功保存之后，执行其他逻辑
-            console.log('保存成功。objectId：' + newMusic.id);
+            let {id,attributes}=newMusic;
+            Object.assign(this.data,{id,...attributes})
             }, function (error) {
             // 异常处理
             console.error(error);
@@ -48,12 +49,28 @@
             this.model = model;
             this.view.render(this.model.data);
             window.eventHub.on('upload',(data)=>{
+                $(this.view.el).find('h2').html('新建歌曲');
+                $(this.view.el).find('#singer').val('');
+                $(this.view.el).find('#songLink').val('');
+                $(this.view.el).find('#songName').val('');
                 $(this.view.el).find('#songName').val(data.key);
                 $(this.view.el).find('#songLink').val(data.link);
             });
+            window.eventHub.on('newSongClick',(data)=>{
+                $(this.view.el).find('h2').html('新建歌曲');
+                $(this.view.el).find('#singer').val('');
+                $(this.view.el).find('#songLink').val('');
+                $(this.view.el).find('#songName').val('');
+            });
             this.eventListener();
+            window.eventHub.on('songchosen',(data)=>{
+                $(this.view.el).find('h2').html('歌曲信息');
+                $(this.view.el).find('#songName').val(data.name);
+                $(this.view.el).find('#songLink').val(data.link);
+                $(this.view.el).find('#singer').val(data.singer);
+            })
         },
-        
+
         eventListener(){
             this.view = view;
             this.model = model;
@@ -62,9 +79,9 @@
             let songName = $(this.view.el).find('#songName');
             $(this.view.el).find('#save').click(function(){
                 let data={
-                    'songName':songName.val(),
-                    'songLink':songLink.val(),
+                    'name':songName.val(),
                     'singer':singer.val(),
+                    'link':songLink.val(),  
                 }
                 model.creat(data);
                 window.eventHub.emmit('saveSong',data);

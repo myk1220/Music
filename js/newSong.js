@@ -17,11 +17,19 @@
             this.model = model;
             this.view.render(this.model.data);
             window.eventHub.on('upload',(data)=>{
-                $(this.view.el).addClass('active');
+                $(this.view.el).find('.newSong').addClass('active');
+            });
+            window.eventHub.on('songchosen',(data)=>{
+                $(this.view.el).find('.newSong').removeClass('active');
+            });
+            this.eventListener();
+        },
+        eventListener(){
+            $(this.view.el).on('click','div',()=>{
+                $(this.view.el).find('.newSong').addClass('active');
+                window.eventHub.emmit('newSongClick',null);
             })
         }
-
-
     }
 
     controler.init(view,model);
