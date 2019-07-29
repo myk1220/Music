@@ -69,8 +69,10 @@
                         var res = JSON.parse(info.response);
                         var sourceLink ='http://'+ domain +'/'+ encodeURIComponent(res.key);
                         window.eventHub.emmit('upload',{
-                            key:res.key,
-                            link:sourceLink
+                            name:res.key,
+                            link:sourceLink,
+                            singer:'',
+                            id:''
                         });
                     },
                     'Error': function(up, err, errTip) {

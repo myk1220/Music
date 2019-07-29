@@ -7,10 +7,14 @@
         `,
         render(data){          
             $(this.el).html(this.template);
-            let {songs}=data;
+            let {songs,selectedSongId}=data;
             let liList=[];
-            for(let i=0;i<songs.length;i++){
-                liList.push( $('<li></li>').text(songs[i].name));
+            for(let i=0;i<songs.length;i++){                
+                if(songs[i].id===selectedSongId){
+                    liList.push( $('<li class="active"></li>').text(songs[i].name));
+                }else{
+                    liList.push( $('<li></li>').text(songs[i].name));
+                }
             }
             $(this.el+">ul").empty();
             liList.map((domLi)=>{
@@ -21,7 +25,8 @@
 
     let model={
         data:{
-            songs:[]
+            songs:[],
+            selectedSongId:undefined,
         },
         getSong(){
             var query = new AV.Query('Music');
@@ -42,26 +47,33 @@
                 this.view.render(this.model.data);
             });
             this.view.render(this.model.data);
-            window.eventHub.on('upload',(data)=>{
+            window.eventHub.on('upload',()=>{
                 $(this.view.el).find('.active').removeClass('active');
             });
-            window.eventHub.on('newSongClick',(data)=>{
+            window.eventHub.on('newSongClick',()=>{
                 $(this.view.el).find('.active').removeClass('active');
             });
             window.eventHub.on('saveSong',(data)=>{
                 this.model.data.songs.push(data);
                 this.view.render(this.model.data);
             });
+            window.eventHub.on('changeSong',(data)=>{
+                this.model.getSong();
+                this.view.render(this.model.data);
+
+            })
             this.eventListener();
         },
         eventListener(){
             this.view = view;
             this.model = model;
             $(this.view.el).on('click','li',(e)=>{
-                for(let i=0;i<e.currentTarget.parentNode.children.length;i++){
-                    e.currentTarget.parentNode.children[i].classList.remove("active");
-                }      
-                e.currentTarget.classList.add("active");
+                for(let i=0;i<model.data.songs.length;i++){
+                    if(e.currentTarget.innerHTML===model.data.songs[i].name){
+                    model.data.selectedSongId = model.data.songs[i].id;
+                    view.render(model.data);
+                    }
+                }
                 let chosenSong={};
                 for(let i=0;i<this.model.data.songs.length;i++){
                     if(this.model.data.songs[i].name===e.currentTarget.innerHTML){

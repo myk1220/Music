@@ -27,7 +27,8 @@
         eventListener(){
             $(this.view.el).on('click','div',()=>{
                 $(this.view.el).find('.newSong').addClass('active');
-                window.eventHub.emmit('newSongClick',null);
+                sendData={id:'',name:'',singer:'',link:''};
+                window.eventHub.emmit('newSongClick',sendData);
             })
         }
     }
