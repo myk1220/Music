@@ -61,7 +61,7 @@ main > .content{
 
 main > .slide > .songlist{
     flex-grow: 1;
-    max-height:430px ;
+    max-height:420px ;
     overflow: auto;
 }
 main > .slide > .songlist::-webkit-scrollbar{
