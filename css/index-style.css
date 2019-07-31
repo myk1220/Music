@@ -1,17 +1,12 @@
 *{
     margin: 0;padding: 0;list-style: none;text-decoration: none;
-    box-sizing: border-box;
+    box-sizing: border-box;outline: none;cursor: default;
+}
+input{
+    font: inherit;
 }
 body{
     font-family:SF Pro Text;
-}
-@keyframes blink{
-    0%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0.6;
-    }
 }
 
 
@@ -19,27 +14,39 @@ body{
 
 .welcome-page{
     width: 100%;
-    padding-bottom: 1.55rem;
-    background: url(../img/welcome-bg.jpeg) no-repeat;
-    background-size: contain;    
+    height: 6.67rem;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
     text-align: center;
     position: relative;
 }
-.welcome-page > .welcome-head{
+.welcome-page > .welcome-bg {
+    background: url(../img/signIn-bg2.jpeg);
+    height:6.67rem;
+    text-align: center;
+    line-height: 6.67rem;
+}
+.welcome-page > .welcome-bg-blur {
+    position: fixed;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(2px);
+    z-index: -1;
+}
+.welcome-page > .welcome-wrap > .welcome-head{
     width: 100%;
     height: 0.64rem;
     padding: 0.3rem 0 0.12rem;
     position: relative;
-    background-color: rgb(0, 0, 0);
 }
-.welcome-page > .welcome-head > p{
+.welcome-page > .welcome-wrap > .welcome-head > p{
     display: inline-block;
     font-weight:600;
     margin: 0 auto;
 }
-.welcome-page > .welcome-head > a{
+.welcome-page > .welcome-wrap > .welcome-head > a{
     font-weight:400;
     color:rgba(255,149,0,1);
     display: inline-block;
@@ -48,31 +55,29 @@ body{
     cursor: pointer;
     transition: all 0.3s;
 }
-.welcome-page > .welcome-head > a:hover{
+.welcome-page > .welcome-wrap > .welcome-head > a:hover{
     color: rgb(253, 253, 253);
 }
-.welcome-page > .welcome-content >.welcome-icon-bottom,.welcome-text,.welcome-text-bottom{
+.welcome-page > .welcome-wrap > .welcome-content >.welcome-icon-bottom,.welcome-text,.welcome-text-bottom{
     margin: 0 auto;
 }
-.welcome-page > .welcome-content > .welcome-icon > img{
+.welcome-page > .welcome-wrap > .welcome-content > .welcome-icon > img{
     width: 0.5rem;
     height: 0.5rem;
     margin: 0.29rem 0 0.07rem 0;
     border-radius: 0.5rem;
-    animation: blink 1.2s infinite alternate;
 }
-.welcome-page > .welcome-content > .welcome-icon-bottom{
+.welcome-page > .welcome-wrap > .welcome-content > .welcome-icon-bottom{
     font-size: 0.26rem;
     font-weight:500;
-    animation: blink 1.2s infinite alternate;
 }
-.welcome-page > .welcome-content > .welcome-text{
+.welcome-page > .welcome-wrap > .welcome-content > .welcome-text{
     font-size:0.26rem;
     font-weight:500;
     margin-top: 2.37rem;
     margin-bottom: 0.07rem;
 }
-.welcome-page > .welcome-content > .welcome-text-bottom{
+.welcome-page > .welcome-wrap > .welcome-content > .welcome-text-bottom{
     width:2.52rem;
     height:0.44rem;
     font-weight:400;
@@ -85,66 +90,113 @@ body{
 
 .signIn-page{
     width: 100%;
-    padding-bottom: 2.61rem;
-    /* background: url(../img/welcome-bg.jpeg) no-repeat;
-    background-size: contain;     */
-    background: #2c2b2b;
-    color:rgba(255,255,255,1);
+    height: 6.67rem;
+    /* background: url(../img/signIn-bg.jpeg) no-repeat;
+    background-size: contain; */
+    color:rgb(255,255,255);
     font-size: 0.17rem;
     text-align: center;
     position: relative;
 }
-.signIn-page > .signIn-head{
+
+.signIn-page > .signIn-bg {
+    background: url(../img/signIn-bg3.jpeg);
+    height:6.67rem;
+    text-align: center;
+    line-height: 6.67rem;
+}
+.signIn-page > .signIn-bg-blur {
+    position: fixed;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(1px);
+    z-index: -1;
+}
+.signIn-page >.signIn-wrap > .signIn-head{
     width: 100%;
     height: 0.64rem;
     padding: 0.3rem 0 0.12rem;
     position: relative;
-    background-color: rgb(0, 0, 0);
 }
-.signIn-page > .signIn-head > a,p{
-    display: inline-block;
-}
-.signIn-page > .signIn-head > a:first-child{
+.signIn-page >.signIn-wrap > .signIn-head > a:first-child{
     font-weight:400;
     color:rgba(255,149,0,1);
     position: absolute;
     left:0.16rem;
     cursor: pointer;
     transition: all 0.3s;
+    font-weight: 400;
+    display: inline-block;
 }
-.signIn-page > .signIn-head > a:last-child{
+.signIn-page >.signIn-wrap > .signIn-head > a:last-child{
     font-weight:400;
     color:rgba(255,149,0,1);
     position: absolute;
     right:0.16rem;
     cursor: pointer;
     transition: all 0.3s; 
+    font-weight: 400;
+    display: inline-block;
 }
-.signIn-page > .signIn-head > a:hover{
+.signIn-page >.signIn-wrap > .signIn-head > a:hover{
     color: rgb(253, 253, 253);
 }
-.signIn-page > .signIn-content > .signIn-icon > img{
+.signIn-page >.signIn-wrap > .signIn-head > p{
+    font-weight:600;
+    display: inline-block;
+}
+.signIn-page >.signIn-wrap > .signIn-content > .signIn-icon > img{
     width: 0.5rem;
     height: 0.5rem;
     margin: 0.29rem 0 0.07rem 0;
     border-radius: 0.5rem;
-    animation: blink 1.2s infinite alternate;
 }
-.signIn-page > .signIn-content > .signIn-icon-bottom{
+.signIn-page >.signIn-wrap > .signIn-content > .signIn-icon-bottom{
     font-size: 0.26rem;
     font-weight:500;
-    margin-bottom: 0.23rem;
-    animation: blink 1.2s infinite alternate;
+    margin-bottom: 0.35rem;
 }
-.signIn-page > .signIn-content > form > #username{
+#signIn-username{
     border: 0;
     background-color: rgba(255,255,255,0);
-    border-bottom: 1px solid rgba(209,209,214,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
     outline: none;
+    margin-bottom:0.22rem;
+    width: 2.5rem;
+    padding-bottom: 0.12rem;
+    color: white;
+    cursor: text;
 }
-.signIn-page > .signIn-content > form > #password{
+#signIn-password{
     border: 0;
     background-color: rgba(255,255,255,0);
-    border-bottom: 1px solid rgba(209,209,214,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
     outline: none;
+    margin-bottom:0.22rem;
+    width: 2.5rem;
+    padding-bottom: 0.12rem;
+    color: white;
+    cursor: text;
+}
+#signIn-submit{
+    margin-top: 0.29rem;
+    margin-bottom: 0.19rem;
+    color: white;
+    font-size: 0.16rem;
+    font-weight: 500;
+    width:1.71rem;
+    height:0.44rem;
+    border: 0;
+    background-color:rgba(0,118,255,1);
+    border-radius:4px;
+    cursor: pointer;
+}
+.signIn-page >.signIn-wrap > .signIn-content > .signIn-form > div > a{
+    font-size:0.16rem;
+    font-weight:400;
+    color:rgba(234,234,237,1);
+    cursor: pointer;
+
 }
