@@ -21,7 +21,7 @@ body{
     position: relative;
 }
 .welcome-page > .welcome-bg {
-    background: url(../img/signIn-bg2.jpeg);
+    background: url(../img/welcome-bg.jpeg);
     height:6.67rem;
     text-align: center;
     line-height: 6.67rem;
@@ -89,6 +89,7 @@ body{
 /*----- sign in css -----*/
 
 .signIn-page{
+    display: none;
     width: 100%;
     height: 6.67rem;
     /* background: url(../img/signIn-bg.jpeg) no-repeat;
@@ -120,7 +121,7 @@ body{
     padding: 0.3rem 0 0.12rem;
     position: relative;
 }
-.signIn-page >.signIn-wrap > .signIn-head > a:first-child{
+.signIn-page >.signIn-wrap > .signIn-head > .signIn-back{
     font-weight:400;
     color:rgba(255,149,0,1);
     position: absolute;
@@ -130,7 +131,18 @@ body{
     font-weight: 400;
     display: inline-block;
 }
-.signIn-page >.signIn-wrap > .signIn-head > a:last-child{
+.signIn-page >.signIn-wrap > .signIn-head > .signIn-back::before{
+    content: '';
+    background-image: url(../img/back.svg);
+    width: 0.2rem;
+    height: 0.3rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    float: left;
+    margin:0.01rem 0.02rem 0 0;
+}
+.signIn-page >.signIn-wrap > .signIn-head > .signIn-skip{
     font-weight:400;
     color:rgba(255,149,0,1);
     position: absolute;

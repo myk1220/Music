@@ -29,12 +29,19 @@
             this.model = model;
             this.view.render();
             this.pageOff();
+            window.eventHub.on('signIn-back',()=>{
+                this.pageShow();
+            });
         },
 
         pageOff(){
             $(view.el).find('#welcome-skip').click(()=>{
-                $(view.el).fadeOut();
+                $(view.el).slideUp();
+                window.eventHub.emmit('welcome-skip');
             });
+        },
+        pageShow(){
+            $(view.el).slideDown();
         }
     }
     
