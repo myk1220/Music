@@ -13,22 +13,52 @@
                 <div class="signIn-icon"><img src="img/music-icon.png" alt="图片加载失败"></div> 
                 <p class="signIn-icon-bottom">Musical</p>
                 <div class="signIn-form">
-                    <div><input class="username" id="signIn-username" type="text"></div>
-                    <div><input class="password" id="signIn-password" type="password"></div>
-                    <div><input class="submit" id="signIn-submit" type="button"  value="sign In"></div>
-                    <div><a class="CreatAccount" href="#">Creat a New Account</a></div>
+                    <div><input class="input" id="signIn-username" type="text" placeholder="Username"></div>
+                    <div><input class="input" id="signIn-password" type="password" placeholder="Password"></div>
+                    <div><input class="input" id="signIn-submit" type="button"  value="sign In"></div>
+                    <div><a id="CreatAccount" href="#">Creat a New Account</a></div>
                 </div>
             </div>
         </div>    
         `,
-        render(data){
-            $(this.el).html(this.template)
+        template_up:`
+            <div class="signUp-bg signUp-bg-blur"></div>
+            <div class="signUp-wrap">
+                <div class="signUp-head">
+                    <a class="signUp-back" id="signUp-back" href="#">Back</a>
+                    <p>Sign Up</p>
+                </div>
+                <div class="signUp-content">
+                    <p class="signUp-icon-bottom">Account Registration</p>
+                    <div class="signUp-form">
+                        <div><input class="input" id="signUp-username" type="text" placeholder="Username"></div>
+                        <div><input class="input" id="signUp-email" type="text" placeholder="Email Adress"></div>
+                        <div><input class="input" id="signUp-password" type="password" placeholder="Password"></div>
+                        <div><input class="submit" id="signUp-submit" type="button"  value="sign Up"></div>
+                        <div class="signUp-icon"><img src="img/music-icon.png" alt="图片加载失败"></div> 
+                        <div class="declare">
+                            <p>By signing up,you agree to the<p>
+                            <p>Terms Of Service<p>
+                            <p style="color: white;margin:0 0.01rem 0 0.03rem">&</p>
+                            <p>Privacy Police</p>
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        `,
+        render(data,content){
+            $(this.el).html(content)
         }
     }
 
     let model={
         data:{
-            userinfo:[]
+            userinfo:[],
+            newUserInfo:{
+                username:'',
+                password:'',
+                emailAdress:''
+            }
         },
         signIndata(){
             var query = new AV.Query('userInfo');
@@ -38,20 +68,34 @@
                 });
                 return userinfo;
             });
-        }
+        },
+        creatdata(data){
+            var User = AV.Object.extend('userInfo');
+            var user = new User();
+            user.set('username', data.newUserInfo.username);
+            user.set('password', data.newUserInfo.password);
+            user.set('emailAdress',data.newUserInfo.emailAdress);
+            user.save().then(function (newUser) {
+                alert('创建成功');
+                controler.pageOff();
+            }, function (error) {
+                console.error(error);
+            });
+        },
     }
 
     let controler={
         init(view,model){
             this.view = view;
             this.model = model;
-            this.view.render();
-            this.pageOff();
-            this.signIn();
+            this.view.render(model.data,view.template);
+            this.signIn_pageOff();
+            this.signIn_submit();
             this.model.signIndata();
+            this.creatAccount();
         },
 
-        pageOff(){
+        signIn_pageOff(){
             $(view.el).find('.signIn-skip').click(()=>{
             
             });
@@ -59,12 +103,14 @@
                 window.eventHub.emmit('signIn-back');
             });
         },
-        pageShow(){
+
+        signIn_pageShow(){
            
         },
-        signIn(){
+
+        signIn_submit(){
             $(view.el).find('#signIn-submit').click(()=>{
-                let input_username=$(view.el).find('.username').val();
+                let input_username=$(view.el).find('#signIn-username').val();
                 let input_password=$(view.el).find('#signIn-password').val();
                 for(let i=0;i<model.data.userinfo.length;i++){
                     if(input_username===model.data.userinfo[i].username&&input_password===model.data.userinfo[i].password){
@@ -73,7 +119,46 @@
                     }
                 }
             })
+        },
+
+        creatAccount(){
+            $(view.el).find('#CreatAccount').click(()=>{
+                view.render(model.data,view.template_up);
+                this.signUp_pageoff();
+                this.signUp_submit();
+            }) 
+        },
+
+        signUp_pageoff(){
+            $(view.el).find('#signUp-back').click(()=>{
+                view.render(model.data,view.template);
+                this.signIn_pageOff();
+                this.signIn_submit();
+                this.model.signIndata();
+                this.creatAccount();
+            }) 
+        },
+        pageOff(){
+            view.render(model.data,view.template);
+            this.signIn_pageOff();
+            this.signIn_submit();
+            this.model.signIndata();
+            this.creatAccount();            
+        },
+        signUp_submit(){
+            $(view.el).find('#signUp-submit').click(()=>{
+                model.signIndata();
+                model.data.newUserInfo.username = $(view.el).find('#signUp-username').val();
+                model.data.newUserInfo.emailAdress = $(view.el).find('#signUp-email').val();
+                model.data.newUserInfo.password = $(view.el).find('#signUp-password').val();            
+                if(model.data.userinfo.filter((item)=>{return item.username === model.data.newUserInfo.username}).length === 0){
+                    model.creatdata(model.data);
+                }else{
+                    console.log('用户名已存在');
+                };
+            })
         }
+
     }
     
     controler.init(view,model);
