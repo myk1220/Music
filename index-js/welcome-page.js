@@ -36,12 +36,14 @@
 
         pageOff(){
             $(view.el).find('#welcome-skip').click(()=>{
-                $(view.el).slideUp();
-                window.eventHub.emmit('welcome-skip');
-            });
+                $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
+                    $(view.el).hide()
+                })
+            })
         },
+
         pageShow(){
-            $(view.el).slideDown();
+            $(view.el).show().animate({'left':0},500)
         }
     }
     
