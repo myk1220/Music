@@ -295,6 +295,7 @@ body{
     background-color:rgba(0,118,255,1);
     border-radius:4px;
     cursor: pointer;
+    line-height: 0.44rem;
 }
 .signIn-page>.signUp-wrap>.signUp-content>.signUp-form>.declare{
     font-size:0.14rem;
