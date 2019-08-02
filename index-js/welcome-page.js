@@ -39,6 +39,7 @@
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
                 })
+                window.eventHub.emmit('checkCookie');
             })
         },
 

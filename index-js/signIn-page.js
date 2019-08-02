@@ -7,7 +7,7 @@
             <div class="signIn-head">
                 <a class="signIn-back" href="#">back</a>
                 <p>Sign In</p>
-                <a class="signIn-skip" href="#">skip</a>
+                <a class="signIn-skip" href="index-page.html">Visitor</a>
             </div>
             <div class="signIn-content">
                 <div class="signIn-icon"><img src="img/music-icon.png" alt="图片加载失败"></div> 
@@ -93,13 +93,23 @@
             this.signIn_submit();
             this.model.signIndata();
             this.creatAccount();
+            window.eventHub.on('checkCookie',()=>{
+            this.userCookie();
+            })
+        },
+
+        userCookie(){
+            if(this.getCookie()['username']!=undefined){
+                window.location.href = "index-page.html";    
+            }
         },
 
         signIn_pageOff(){
             $(view.el).find('.signIn-skip').click(()=>{
-            
+                window.location.href = "index-page.html";        
             });
             $(view.el).find('.signIn-back').click(()=>{
+                console.log(window.eventHub.events);
                 window.eventHub.emmit('signIn-back');
             });
         },
@@ -112,12 +122,16 @@
             $(view.el).find('#signIn-submit').click(()=>{
                 let input_username=$(view.el).find('#signIn-username').val();
                 let input_password=$(view.el).find('#signIn-password').val();
+                let signIn_flag=0;
                 for(let i=0;i<model.data.userinfo.length;i++){
                     if(input_username===model.data.userinfo[i].username&&input_password===model.data.userinfo[i].password){
-                        console.log('登录成功');
-                        break;
+                            this.setCookie('username',input_username);
+                            signIn_flag=1;
+                            window.location.href = "index-page.html";
+                            break;
                     }
                 }
+                if(signIn_flag===0){alert('用户名或密码不正确');}
             })
         },
 
@@ -157,7 +171,32 @@
                     console.log('用户名已存在');
                 };
             })
-        }
+        },
+        
+        setCookie(name,value){ 
+            var exp = new Date(); 
+            exp.setTime(exp.getTime() +24*60*60*1000); 
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString(); 
+        },
+
+        getCookie(){
+            var cookie=document.cookie;
+            var cookieArr=cookie.split(';');
+            var finalObj={};
+            for(var i=0;i<cookieArr.length;i++){
+                var tempArr=cookieArr[i].trim().split('=');
+                finalObj[tempArr[0]]=tempArr[1];
+            }
+            return finalObj;
+        },
+
+        delCookie(name){ 
+            var exp = new Date(); 
+            exp.setTime(exp.getTime() - 10000); 
+            var cval=controller.getCookie()['username'];
+            if(cval!=null) 
+                document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
+        },
 
     }
     

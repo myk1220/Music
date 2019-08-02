@@ -23,8 +23,4 @@ window.eventHub = {
         }
         
     },
-    off(){},
-    test(){
-        console.log(111);
-    }
 }

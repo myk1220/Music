@@ -191,17 +191,26 @@ body{
     font-weight: 500;
     width:1.71rem;
     height:0.44rem;
+    line-height: 0.44rem;
     border: 0;
     background-color:rgba(0,118,255,1);
     border-radius:4px;
     cursor: pointer;
+    transition: all .3s;
+}
+#signIn-submit:hover{
+    background-color:  #FF9500;
 }
 .signIn-page >.signIn-wrap > .signIn-content > .signIn-form > div > #CreatAccount{
     font-size:0.16rem;
     font-weight:400;
     color:rgba(234,234,237,1);
     cursor: pointer;
+    transition: all .3s;
 
+}
+.signIn-page >.signIn-wrap > .signIn-content > .signIn-form > div > #CreatAccount:hover{
+    color: #FF9500;
 }
 
 /*----- sign Up css -----*/
@@ -311,3 +320,6 @@ body{
     color: white;
     display: block;
 }
+
+
+
