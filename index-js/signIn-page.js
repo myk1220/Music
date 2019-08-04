@@ -109,13 +109,8 @@
                 window.location.href = "index-page.html";        
             });
             $(view.el).find('.signIn-back').click(()=>{
-                console.log(window.eventHub.events);
                 window.eventHub.emmit('signIn-back');
             });
-        },
-
-        signIn_pageShow(){
-           
         },
 
         signIn_submit(){
