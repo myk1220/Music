@@ -53,10 +53,6 @@
                     </div>
                     <div class="hot-songs-list-wrap">
                         <ul class="hot-songsUl">
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">Warriors</p><p class="hot-songs-list-singer">Imagin Dragon</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">Legend</p><p class="hot-songs-list-singer">The Score</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">春秋</p><p class="hot-songs-list-singer">张敬轩</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">打上花火</p><p class="hot-songs-list-singer">DAOKO,米津玄師</p></li>
                         </ul>
                     </div>                    
                 </div>
@@ -116,10 +112,6 @@
                     </div>
                     <div class="hot-songs-list-wrap">
                         <ul class="hot-songsUl">
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">Warriors</p><p class="hot-songs-list-singer">Imagin Dragon</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">Legend</p><p class="hot-songs-list-singer">The Score</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">春秋</p><p class="hot-songs-list-singer">张敬轩</p></li>
-                            <li class="hot-songsLi"><p class="hot-songs-list-name">打上花火</p><p class="hot-songs-list-singer">DAOKO,米津玄師</p></li>
                         </ul>
                     </div>                    
                 </div>
@@ -129,11 +121,19 @@
         `,
         render(data,content){
             $(this.el).html(content);
+            for(let j=0;j<data.hotsongs.length;j++){
+                let $li=$('<li class="hot-songsLi"><p class="hot-songs-list-name">'+data.hotsongs[j].name+'</p><p class="hot-songs-list-singer">'+data.hotsongs[j].singer+'</p></li>');
+                $(this.el).find('.hot-songsUl').append($li);
+            }
         }
     }
 
     let model={
-        data:{}
+        data:{
+            hotsongs:[],
+            username:''
+        }
+        
     }
 
     let controler={
@@ -141,25 +141,40 @@
             this.view=view;
             this.model=model;
             this.renderCookie();
-            this.userCookie();
-            this.logOut();
-            this.logIn();
-            this.singerTo_playlist();
-            window.eventHub.on('playList-back',()=>{
-                $(this.view.el).show().animate({'left':0},500);                
-            })
         },
         renderCookie(){
+            this.view=view;
+            this.model=model;
             let consumer=this.getCookie()['username'];
             if(consumer===undefined){
-                this.view.render(this.model.data,this.view.template_visitor);
+                this.getHotsongs().then(()=>{
+                    this.view.render(model.data,view.template_visitor);
+                    this.userCookie();
+                    this.swiper_init();
+                    this.logOut();
+                    this.logIn();
+                    this.singerTo_playlist();
+                    window.eventHub.on('playList-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    })
+                });
             }else{
-                this.view.render(this.model.data,this.view.template);
+                this.getHotsongs().then(()=>{
+                    this.view.render(model.data,view.template);
+                    this.userCookie();
+                    this.swiper_init();
+                    this.logOut();
+                    this.logIn();
+                    this.singerTo_playlist();
+                    window.eventHub.on('playList-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    })
+                });
             }
         },
         userCookie(){
-            let consumer=this.getCookie()['username'];
-            $(this.view.el).find('.index-back').html(consumer);
+            let consumer=unescape(this.getCookie()['username']);
+            $(view.el).find('.index-back').html(consumer);
         },
         getCookie(){
             var cookie=document.cookie;
@@ -192,12 +207,50 @@
         },
         singerTo_playlist(){
             $(this.view.el).find('#singer-swiper').on('click','div',function(e){
+                console.log(window.eventHub.events);
                 window.eventHub.emmit('singer-playlist',e.currentTarget.getAttribute('singer_id'));
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
                 });
             })
+        },
+        getHotsongs(){
+            var song = new AV.Query('Music');
+            song.equalTo('hotSong', 'hot');
+            song.select(['name', 'singer']);
+            return song.find().then(function (hotsong) {
+                for(let i=0;i<hotsong.length;i++){
+                    model.data.hotsongs.push(hotsong[i].attributes);
+                }
+                return model.data.hotsongs;
+            });
+        },
+        swiper_init(){
+            var mySwiper_singer = new Swiper ('.swiper-container-singer', {
+                direction: 'horizontal',
+                loop: true,
+                pagination :{
+                  el: '.swiper-pagination',
+                  clickable :true,
+                },
+                autoplay: {
+                  delay: 3000,
+                  stopOnLastSlide: false,
+                  disableOnInteraction: false,
+                },
+            });
+        
+            var swiper_album = new Swiper('.swiper-container-album', {
+              slidesPerView: 2.4,
+              spaceBetween: 15
+            });
+            
+            var swiper_language = new Swiper('.swiper-container-language', {
+              slidesPerView: 1.7,
+              spaceBetween: 15
+            });    
         }
     }
     controler.init(view,model);
+
 }

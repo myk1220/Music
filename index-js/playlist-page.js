@@ -41,9 +41,13 @@
         }
     }
 
-    let model={}
+    let model={
+        data:{
+        }
+    }
 
     let controler={
+
         init(view,model){
             this.view=view;
             this.model=model;
@@ -56,12 +60,11 @@
         playlist_pageBack(){
             $(view.el).find('.playList-back').click(()=>{
                 window.eventHub.emmit('playList-back');
-                setInterval(() => {
-                    $(this.view.el).css("visibility","hidden");    
-                }, 1000); 
-            });        
+                setTimeout(() => {
+                    $(this.view.el).css("visibility","hidden")              
+                }, 1000);
+            });
         }
     }
-
     controler.init(view,model);
 }
