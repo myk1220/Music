@@ -52,7 +52,6 @@
 
         getplaylist(singername){
             this.data.singerPlayList=[];
-            console.log(this.data.singerPlayList);
             var song = new AV.Query('Music');
             song.equalTo('singer', singername);
             song.select(['name', 'singer']);

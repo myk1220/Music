@@ -231,8 +231,9 @@ body{
     padding: 0.07rem 0 0.09rem 0;
     text-align: left;
     border-bottom:1px solid rgba(209,209,214,0.2);
+    cursor: pointer;
 }
-.index-page > .index-wrap > .index-content > .hot-songs > .hot-songs-list-wrap > .hot-songsUl > .hot-songsLi:hover > .hot-songs-list-name{
+.index-page > .index-wrap > .index-content > .hot-songs > .hot-songs-list-wrap > .hot-songsUl > .hot-songsLi:hover{
     color: #FF9500
 }
 .index-page > .index-wrap > .index-content > .hot-songs > .hot-songs-list-wrap > .hot-songsUl > .hot-songsLi:last-child{
@@ -248,19 +249,20 @@ body{
     display: block;
     float: left;
     margin-top: 0.07rem;   
-    margin-right: 0.07rem;   
+    margin-right: 0.07rem;  
+    pointer-events: none; 
 }
 .index-page > .index-wrap > .index-content > .hot-songs > .hot-songs-list-wrap > .hot-songsUl > .hot-songsLi > .hot-songs-list-name{
     font-size: 0.17rem;
     font-weight: 400;
-    cursor: pointer;
     transition: all .3s;
+    pointer-events: none; 
 }
 .index-page > .index-wrap > .index-content > .hot-songs > .hot-songs-list-wrap > .hot-songsUl > .hot-songsLi > .hot-songs-list-singer{
     font-size: 0.15rem;
     font-weight: 400;
     color: rgba(143,142,148,1);
-    cursor: pointer;
+    pointer-events: none; 
 }
 
 /* -----log out css----- */
@@ -662,6 +664,7 @@ body{
 
 
 .language-page{
+    visibility: hidden;
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
