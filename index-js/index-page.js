@@ -132,7 +132,18 @@
         data:{
             hotsongs:[],
             username:''
-        }
+        },
+        getHotsongs(){
+            var song = new AV.Query('Music');
+            song.equalTo('hotSong', 'hot');
+            song.select(['name', 'singer']);
+            return song.find().then(function (hotsong) {
+                for(let i=0;i<hotsong.length;i++){
+                    model.data.hotsongs.push(hotsong[i].attributes);
+                }
+                return model.data.hotsongs;
+            });
+        },
         
     }
 
@@ -147,7 +158,7 @@
             this.model=model;
             let consumer=this.getCookie()['username'];
             if(consumer===undefined){
-                this.getHotsongs().then(()=>{
+                this.model.getHotsongs().then(()=>{
                     this.view.render(model.data,view.template_visitor);
                     this.userCookie();
                     this.swiper_init();
@@ -159,7 +170,7 @@
                     })
                 });
             }else{
-                this.getHotsongs().then(()=>{
+                this.model.getHotsongs().then(()=>{
                     this.view.render(model.data,view.template);
                     this.userCookie();
                     this.swiper_init();
@@ -174,7 +185,9 @@
         },
         userCookie(){
             let consumer=unescape(this.getCookie()['username']);
+            if(consumer!='undefined'){
             $(view.el).find('.index-back').html(consumer);
+            }
         },
         getCookie(){
             var cookie=document.cookie;
@@ -207,24 +220,13 @@
         },
         singerTo_playlist(){
             $(this.view.el).find('#singer-swiper').on('click','div',function(e){
-                console.log(window.eventHub.events);
                 window.eventHub.emmit('singer-playlist',e.currentTarget.getAttribute('singer_id'));
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
                 });
             })
         },
-        getHotsongs(){
-            var song = new AV.Query('Music');
-            song.equalTo('hotSong', 'hot');
-            song.select(['name', 'singer']);
-            return song.find().then(function (hotsong) {
-                for(let i=0;i<hotsong.length;i++){
-                    model.data.hotsongs.push(hotsong[i].attributes);
-                }
-                return model.data.hotsongs;
-            });
-        },
+
         swiper_init(){
             var mySwiper_singer = new Swiper ('.swiper-container-singer', {
                 direction: 'horizontal',
