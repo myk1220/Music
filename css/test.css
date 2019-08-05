@@ -10,8 +10,8 @@ body{
     position: relative;
 }
 
-/*----- playlist page css -----*/
-.playList-page{
+/*----- Album page css -----*/
+.Album-page{
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
@@ -20,13 +20,13 @@ body{
     top: 0;
     z-index: 9;
 }
-.playList-page > .playList-bg {
+.Album-page > .Album-bg {
     background: url(../img/index-bg.jpg);
     height:6.67rem;
     text-align: center;
     line-height: 6.67rem;
 }
-.playList-page > .playList-bg-blur {
+.Album-page > .Album-bg-blur {
     position: fixed;
     width: 100%;
     background-repeat: no-repeat;
@@ -35,7 +35,7 @@ body{
     filter: blur(1px);
     z-index: -1;
 }
-.playList-page{
+.Album-page{
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
@@ -44,13 +44,13 @@ body{
     top: 0;
     z-index: 8;
 }
-.playList-page >.playList-wrap > .playList-head{
+.Album-page >.Album-wrap > .Album-head{
     width: 100%;
     height: 0.64rem;
     padding: 0.3rem 0 0.12rem;
     position: relative;
 }
-.playList-page >.playList-wrap > .playList-head > .playList-back{
+.Album-page >.Album-wrap > .Album-head > .Album-back{
     font-weight:300;
     color:rgba(255,149,0,1);
     position: absolute;
@@ -60,7 +60,7 @@ body{
     transition: all 0.3s;
     display: inline-block;
 }
-.playList-page >.playList-wrap > .playList-head > .playList-back::before{
+.Album-page >.Album-wrap > .Album-head > .Album-back::before{
     content: '';
     background-image: url(../img/back.svg);
     width: 0.25rem;
@@ -71,7 +71,7 @@ body{
     float: left;
     margin-right: 0.05rem;
 }
-.playList-page >.playList-wrap > .playList-head > .search{
+.Album-page >.Album-wrap > .Album-head > .search{
     width: 0.25rem;
     height: 0.25rem;
     color:rgba(255,149,0,1);
@@ -81,45 +81,45 @@ body{
     transition: all 0.3s;
     display: inline-block;
 }
-.playList-page >.playList-wrap > .playList-head > a:hover{
+.Album-page >.Album-wrap > .Album-head > a:hover{
     color: rgb(253, 253, 253);
 }
-.playList-page >.playList-wrap > .playList-head > p{
+.Album-page >.Album-wrap > .Album-head > p{
     font-weight:600;
     display: inline-block;
 }
 
-/* -----singer info head css----- */
-.playList-page > .playList-wrap > .singer-info-wrap{
+/* -----Album info head css----- */
+.Album-page > .Album-wrap > .Album-info-wrap{
     padding-top: 0.16rem;
     padding-left:0.16rem;
     text-align: left;
     overflow: hidden;
 }
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-pic{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-pic{
     float: left;
     margin-right: 0.16rem;
 }
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-pic > img{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-pic > img{
     height: 1.2rem;
     width: 1.2rem;
 }
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-info{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-info{
     float: left;
     height: 1.2rem;
     width: 2.23rem;
     position: relative;
     border-bottom: 1px solid rgba(209,209,214,0.2);
 }
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-info > .singer-info-name{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-info > .Album-info-name{
     font-size: 0.22rem;
     font-weight: 500;
 }    
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-info > .singer-info-country{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-info > .Album-info-singer{
     font-size: 0.22rem;
     font-weight: 500;
 }    
-.playList-page > .playList-wrap > .singer-info-wrap > .singer-info > .singer-info-represent{
+.Album-page > .Album-wrap > .Album-info-wrap > .Album-info > .Album-info-year{
     font-size: 0.13rem;
     font-weight: 400;
     color:rgb(142, 142, 148);
@@ -127,31 +127,31 @@ body{
     bottom: 0;
 }
 
-/* -----songlist css----- */
+/* -----Album songlist css----- */
 
-.playList-page > .playList-wrap > .songlist{
+.Album-page > .Album-wrap > .Album-songlist{
     padding: 0 0 0 0.16rem;
     text-align: left;
     border-bottom: 1px solid rgba(209,209,214,0.2);
     margin-bottom: 0.26rem;
 }
-.playList-page > .playList-wrap > .songlist > .songlist-headBar{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-headBar{
     padding: 0.18rem 0 0.2rem 0;
     font-size: 0.17rem;
     font-weight: 400;
     border-bottom: 1px solid rgba(209,209,214,0.2); 
 }
-.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li{
     height: 0.59rem;
     width: 3.59rem;
     padding: 0.07rem 0 0.09rem 0;
     text-align: left;
     border-bottom:1px solid rgba(209,209,214,0.2);
 }
-.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li:last-child{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li:last-child{
     border-bottom: none;
 }
-.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li::before{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li::before{
     content: '';
     background-image: url(../img/huore-s.svg);
     width: 0.3rem;
@@ -163,13 +163,13 @@ body{
     margin-top: 0.07rem;   
     margin-right: 0.07rem;   
 }
-.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li > .songlist-name{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li > .Album-songlist-name{
     font-size: 0.17rem;
     font-weight: 400;
     cursor: pointer;
     transition: all .3s;
 }
-.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li > .songlist-singer{
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li > .Album-songlist-Album{
     font-size: 0.15rem;
     font-weight: 400;
     color: rgba(143,142,148,1);
