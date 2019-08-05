@@ -10,7 +10,14 @@ body{
     position: relative;
 }
 
+
+/* ------------------------- */
+/* ------------------------- */
 /*----- index page css -----*/
+/* ------------------------- */
+/* ------------------------- */
+
+
 .index-page > .index-bg {
     background: url(../img/index-bg.jpg);
     height:6.67rem;
@@ -119,16 +126,24 @@ body{
     padding-left: 0.16rem;
     border-bottom: 1px solid rgba(209,209,214,0.2);
 }
+.index-page > .index-wrap > .index-content > .Album-list > .swiper-container-album > .swiper-wrapper > div{
+    cursor: pointer;
+    transition: all .3s;
+}
 .index-page > .index-wrap > .index-content > .Album-list > .swiper-container-album > .swiper-wrapper > div > img{
     width: 100%;
     height: 1.4rem;
     border-radius: 5px;
-    cursor: pointer;
+    pointer-events: none;
+}
+.index-page > .index-wrap > .index-content > .Album-list > .swiper-container-album > .swiper-wrapper > div:hover{
+    color: #FF9500;
 }
 .index-page > .index-wrap > .index-content > .Album-list > .swiper-container-album > .swiper-wrapper > div > .album-name{
     text-align: left;
     font-size: 0.17rem;
     font-weight: 400;
+    pointer-events: none;
 }
 .index-page > .index-wrap > .index-content > .Album-list > .swiper-container-album > .swiper-wrapper > div > .album-singer{
     text-align: left;
@@ -136,6 +151,7 @@ body{
     font-weight: 400;
     color: #8F8E94;
     line-height: 0.18rem;
+    pointer-events: none;
 }  
 
 /* -----language css----- */
@@ -335,7 +351,7 @@ body{
 /* ---------------------------------------- */
 
 .playList-page{
-    visibility: hidden;
+    display:none;
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
@@ -414,7 +430,7 @@ body{
 }
 .playList-page > .playList-wrap > .singer-info-wrap > .singer-pic{
     float: left;
-    margin-right: 0.16rem;
+    margin-right: 0.1rem;
 }
 .playList-page > .playList-wrap > .singer-info-wrap > .singer-pic > img{
     height: 1.2rem;
@@ -423,7 +439,7 @@ body{
 .playList-page > .playList-wrap > .singer-info-wrap > .singer-info{
     float: left;
     height: 1.2rem;
-    width: 2.23rem;
+    width: 2.2rem;
     position: relative;
     border-bottom: 1px solid rgba(209,209,214,0.2);
 }
@@ -463,6 +479,10 @@ body{
     padding: 0.07rem 0 0.09rem 0;
     text-align: left;
     border-bottom:1px solid rgba(209,209,214,0.2);
+    cursor: pointer;
+}
+.playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li:hover{
+    color: #FF9500;
 }
 .playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li:last-child{
     border-bottom: none;
@@ -478,18 +498,19 @@ body{
     float: left;
     margin-top: 0.07rem;   
     margin-right: 0.07rem;   
+    pointer-events: none;
 }
 .playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li > .songlist-name{
     font-size: 0.17rem;
     font-weight: 400;
-    cursor: pointer;
     transition: all .3s;
+    pointer-events: none;
 }
 .playList-page > .playList-wrap > .songlist > .songlist-ul-wrap > .songlist-ul > .songlist-ul-li > .songlist-singer{
     font-size: 0.15rem;
     font-weight: 400;
     color: rgba(143,142,148,1);
-    cursor: pointer;
+    pointer-events: none;
 }
 
 /* ---------------------------------------- */
@@ -500,7 +521,7 @@ body{
 
 
 .Album-page{
-    visibility: hidden;
+    display:none;
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
@@ -578,7 +599,7 @@ body{
 }
 .Album-page > .Album-wrap > .Album-info-wrap > .Album-pic{
     float: left;
-    margin-right: 0.16rem;
+    margin-right: 0.1rem;
 }
 .Album-page > .Album-wrap > .Album-info-wrap > .Album-pic > img{
     height: 1.2rem;
@@ -587,7 +608,7 @@ body{
 .Album-page > .Album-wrap > .Album-info-wrap > .Album-info{
     float: left;
     height: 1.2rem;
-    width: 2.23rem;
+    width: 2.2rem;
     position: relative;
     border-bottom: 1px solid rgba(209,209,214,0.2);
 }
@@ -627,6 +648,10 @@ body{
     padding: 0.07rem 0 0.09rem 0;
     text-align: left;
     border-bottom:1px solid rgba(209,209,214,0.2);
+    cursor: pointer;
+}
+.Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li:hover{
+    color: #FF9500;
 }
 .Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li:last-child{
     border-bottom: none;
@@ -641,19 +666,20 @@ body{
     display: block;
     float: left;
     margin-top: 0.07rem;   
-    margin-right: 0.07rem;   
+    margin-right: 0.07rem;
+    pointer-events: none;   
 }
 .Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li > .Album-songlist-name{
     font-size: 0.17rem;
     font-weight: 400;
-    cursor: pointer;
     transition: all .3s;
+    pointer-events: none;  
 }
 .Album-page > .Album-wrap > .Album-songlist > .Album-songlist-ul-wrap > .Album-songlist-ul > .Album-songlist-ul-li > .Album-songlist-singer{
     font-size: 0.15rem;
     font-weight: 400;
     color: rgba(143,142,148,1);
-    cursor: pointer;
+    pointer-events: none;  
 }
 
 /* ---------------------------------------- */
@@ -664,7 +690,7 @@ body{
 
 
 .language-page{
-    visibility: hidden;
+    display: none;
     width: 100%;
     color:rgba(255,255,255,1);
     font-size: 0.17rem;
@@ -739,10 +765,6 @@ body{
     text-align: left;
     overflow: hidden;
 }
-.language-page > .language-wrap > .language-info-wrap > .language-pic{
-    float: left;
-    margin-right: 0.16rem;
-}
 .language-page > .language-wrap > .language-info-wrap > .language-pic {
     width: 100%;
     height: 1.2rem;
@@ -778,6 +800,10 @@ body{
     padding: 0.07rem 0 0.09rem 0;
     text-align: left;
     border-bottom:1px solid rgba(209,209,214,0.2);
+    cursor: pointer;
+}
+.language-page > .language-wrap > .language-songlist > .language-songlist-ul-wrap > .language-songlist-ul > .language-songlist-ul-li:hover{
+    color: #FF9500
 }
 .language-page > .language-wrap > .language-songlist > .language-songlist-ul-wrap > .language-songlist-ul > .language-songlist-ul-li:last-child{
     border-bottom: none;
@@ -793,16 +819,17 @@ body{
     float: left;
     margin-top: 0.07rem;   
     margin-right: 0.07rem;   
+    pointer-events: none;
 }
 .language-page > .language-wrap > .language-songlist > .language-songlist-ul-wrap > .language-songlist-ul > .language-songlist-ul-li > .language-songlist-name{
     font-size: 0.17rem;
     font-weight: 400;
-    cursor: pointer;
+    pointer-events: none;
     transition: all .3s;
 }
-.language-page > .language-wrap > .language-songlist > .language-songlist-ul-wrap > .language-songlist-ul > .language-songlist-ul-li > .language-songlist-language{
+.language-page > .language-wrap > .language-songlist > .language-songlist-ul-wrap > .language-songlist-ul > .language-songlist-ul-li > .language-songlist-singer{
     font-size: 0.15rem;
     font-weight: 400;
     color: rgba(143,142,148,1);
-    cursor: pointer;
+    pointer-events: none;
 }

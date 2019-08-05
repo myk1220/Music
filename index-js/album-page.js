@@ -84,7 +84,7 @@
             this.view.render();
             this.albumlist_pageBack();
             window.eventHub.on('singer-albumlist',(albumname)=>{
-                $(this.view.el).css("visibility","visible");
+                $(this.view.el).css("display","block");
                 this.model.getalbumlist(albumname).then(()=>{
                     this.model.getalbuminfo(albumname).then(()=>{
                         this.view.render();
@@ -98,7 +98,7 @@
             $(view.el).find('.Album-back').click(()=>{
                 window.eventHub.emmit('Album-back');
                 setTimeout(() => {
-                    $(this.view.el).css("visibility","hidden")              
+                    $(this.view.el).css("display","none")              
                 }, 500);
             });
         }

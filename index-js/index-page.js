@@ -38,11 +38,11 @@
                     </div>
                     <div class="swiper-container swiper-container-album">
                             <div id="album-swiper" class="swiper-wrapper">
-                              <div class="swiper-slide"><img src="img/maroonalbum.jpeg" alt="图片加载失败"><p class="album-name">V</p><p class="album-singer">Maroon5</p></div>
-                              <div class="swiper-slide"><img src="img/legend.jpg" alt="图片加载失败"><p class="album-name">Legend</p><p class="album-singer">The Score</p></div>
-                              <div class="swiper-slide"><img src="img/imagindragon.png" alt="图片加载失败"><p class="album-name">Thrones</p><p class="album-singer">Imagin Dragon</p></div>
-                              <div class="swiper-slide"><img src="img/The score.jpeg" alt="图片加载失败"><p class="album-name">Album</p><p class="album-singer">Somebody</p></div>
-                              <div class="swiper-slide"><img src="img/zhangjingxuan.jpeg" alt="图片加载失败"><p class="album-name">Eleven</p><p class="album-singer">张敬轩</p></div>
+                              <div class="swiper-slide" album_id='V'><img src="img/maroonalbum.jpeg" alt="图片加载失败"><p class="album-name">V</p><p class="album-singer">Maroon5</p></div>
+                              <div class="swiper-slide" album_id='Legend'><img src="img/legend.jpg" alt="图片加载失败"><p class="album-name">Legend</p><p class="album-singer">The Score</p></div>
+                              <div class="swiper-slide" album_id='Thrones'><img src="img/imagindragon.png" alt="图片加载失败"><p class="album-name">Thrones</p><p class="album-singer">Imagin Dragon</p></div>
+                              <div class="swiper-slide" album_id='Album'><img src="img/The score.jpeg" alt="图片加载失败"><p class="album-name">Album</p><p class="album-singer">Somebody</p></div>
+                              <div class="swiper-slide" album_id='Eleven'><img src="img/zhangjingxuan.jpeg" alt="图片加载失败"><p class="album-name">Eleven</p><p class="album-singer">张敬轩</p></div>
                             </div>
                     </div>
                 </div>

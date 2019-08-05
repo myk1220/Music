@@ -76,7 +76,7 @@
             this.view.render();
             this.languagelist_pageBack();
             window.eventHub.on('singer-languagelist',(languagename)=>{
-                $(this.view.el).css("visibility","visible");
+                $(this.view.el).css("display","block");
                 this.model.getlanguagelist(languagename).then(()=>{
                     this.model.getlanguageinfo(languagename).then(()=>{
                         this.view.render();
@@ -90,7 +90,7 @@
             $(view.el).find('.language-back').click(()=>{
                 window.eventHub.emmit('language-back');
                 setTimeout(() => {
-                    $(this.view.el).css("visibility","hidden")              
+                    $(this.view.el).css("display","none")              
                 }, 500);
             });
         }

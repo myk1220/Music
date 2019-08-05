@@ -84,7 +84,7 @@
             this.view.render();
             this.playlist_pageBack();
             window.eventHub.on('singer-playlist',(singername)=>{
-                $(this.view.el).css("visibility","visible");
+                $(this.view.el).css("display","block");
                 this.model.getplaylist(singername).then(()=>{
                     this.model.getsingerinfo(singername).then(()=>{
                         this.view.render();
@@ -98,7 +98,7 @@
             $(view.el).find('.playList-back').click(()=>{
                 window.eventHub.emmit('playList-back');
                 setTimeout(() => {
-                    $(this.view.el).css("visibility","hidden")              
+                    $(this.view.el).css("display","none")              
                 }, 500);
             });
         }
