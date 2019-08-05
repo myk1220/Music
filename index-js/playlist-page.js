@@ -7,10 +7,10 @@
             <div class="playList-head">
                 <a class="playList-back" href="#">Back</a>
                 <p>Playlist</p>
-                <img class="search" id="search" src="" alt="">
+                <img class="search" id="search" src="img/search.svg" alt="search">
             </div>
             <div class="singer-info-wrap">
-                <div class="singer-pic"><img src="img/m5.jpg" alt="Maroon 5"></div>
+                <div class="singer-pic"><img src="" alt=""></div>
                 <div class="singer-info">
                     <p class="singer-info-name"></p>
                     <p class="singer-info-country"></p>

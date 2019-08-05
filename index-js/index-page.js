@@ -7,7 +7,7 @@
             <div class="index-head">
                 <a class="index-back" href="#"></a>
                 <p>Musical</p>
-                <img class="search" id="search" src="img/search.svg" alt="">
+                <img class="search" id="search" src="img/search.svg" alt="search">
             </div>
             <div class="index-content">
                 <div class="swiper-container swiper-container-singer">
@@ -25,9 +25,9 @@
                         </div>
                         <div class="swiper-container swiper-container-language">
                                 <div id="language-swiper" class="swiper-wrapper">
-                                  <div class="swiper-slide"><div class="swiper-singer-language-cn">Chineses</div></div>
-                                  <div class="swiper-slide"><div class="swiper-singer-language-en">English</div></div>
-                                  <div class="swiper-slide"><div class="swiper-singer-language-ot">Other Language</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-cn languge" language_id='cn'>Chineses</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-en languge" language_id='en'>English</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-ot languge" language_id='ot'>Other Language</div></div>
                                 </div>
                         </div>
                 </div>
@@ -66,7 +66,7 @@
             <div class="index-head">
                 <a class="index-back" href="#">Visitor</a>
                 <p>Musical</p>
-                <img class="search" id="search" src="img/search.svg" alt="">
+                <img class="search" id="search" src="img/search.svg" alt="search">
             </div>
             <div class="index-content">
                 <div class="swiper-container swiper-container-singer">
@@ -84,9 +84,9 @@
                         </div>
                         <div class="swiper-container swiper-container-language">
                                 <div id="language-swiper" class="swiper-wrapper">
-                                  <div class="swiper-slide"><div class="swiper-singer-language-cn">Chineses</div></div>
-                                  <div class="swiper-slide"><div class="swiper-singer-language-en">English</div></div>
-                                  <div class="swiper-slide"><div class="swiper-singer-language-ot">Other Language</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-cn languge" language_id='cn'>Chineses</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-en languge" language_id='en'>English</div></div>
+                                  <div class="swiper-slide"><div class="swiper-singer-language-ot languge" language_id='ot'>Other Language</div></div>
                                 </div>
                         </div>
                 </div>
@@ -166,10 +166,14 @@
                     this.logIn();
                     this.singerTo_playlist();
                     this.singerTo_albumlist();
+                    this.singerTo_languagelist()
                     window.eventHub.on('playList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
                     window.eventHub.on('Album-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    });
+                    window.eventHub.on('language-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });
@@ -182,10 +186,14 @@
                     this.logIn();
                     this.singerTo_playlist();
                     this.singerTo_albumlist();
+                    this.singerTo_languagelist()
                     window.eventHub.on('playList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
                     window.eventHub.on('Album-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    });
+                    window.eventHub.on('language-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });
@@ -226,6 +234,7 @@
                 window.location.href = "start.html";
             })   
         },
+
         singerTo_playlist(){
             $(this.view.el).find('#singer-swiper').on('click','div',function(e){
                 window.eventHub.emmit('singer-playlist',e.currentTarget.getAttribute('singer_id'));
@@ -237,6 +246,14 @@
         singerTo_albumlist(){
             $(this.view.el).find('#album-swiper').on('click','div',function(e){
                 window.eventHub.emmit('singer-albumlist',e.currentTarget.getAttribute('album_id'));
+                $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
+                    $(view.el).hide()
+                });
+            })
+        },
+        singerTo_languagelist(){
+            $(this.view.el).find('#language-swiper').on('click','.languge',function(e){
+                window.eventHub.emmit('singer-languagelist',e.currentTarget.getAttribute('language_id'));
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
                 });

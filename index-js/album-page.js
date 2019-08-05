@@ -10,7 +10,7 @@
                 <img class="search" id="search" src="img/search.svg" alt="">
             </div>
             <div class="Album-info-wrap">
-                <div class="Album-pic"><img src="img/m5.jpg" alt="Maroon 5"></div>
+                <div class="Album-pic"><img src="img/m5.jpg" alt="search"></div>
                 <div class="Album-info">
                     <p class="Album-info-name">Maroon 5</p>
                     <p class="Album-info-singer">America</p>
