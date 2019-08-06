@@ -24,10 +24,9 @@ body{
     z-index: 10;
 }
 .welcome-page > .welcome-bg {
-    background: url(../img/welcome-bg.jpeg);
-    height:6.67rem;
+    background: url(../img/bg5.jpeg);
+    height:100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .welcome-page > .welcome-bg-blur {
     position: fixed;
@@ -35,7 +34,6 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    filter: blur(2px);
     z-index: -1;
 }
 .welcome-page > .welcome-wrap > .welcome-head{
@@ -104,9 +102,8 @@ body{
 
 .signIn-page > .signIn-bg {
     background: url(../img/signIn-bg3.jpeg);
-    height:6.67rem;
+    height:100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .signIn-page > .signIn-bg-blur {
     position: fixed;
@@ -114,7 +111,6 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    filter: blur(1px);
     z-index: -1;
 }
 .signIn-page >.signIn-wrap > .signIn-head{
@@ -217,9 +213,8 @@ body{
 
 .signIn-page > .signUp-bg {
     background: url(../img/signIn-bg1.jpeg);
-    height:6.67rem;
+    height:100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .signIn-page > .signUp-bg-blur {
     position: fixed;
@@ -227,7 +222,6 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    filter: blur(1px);
     z-index: -1;
 }
 .signIn-page >.signUp-wrap > .signUp-head{

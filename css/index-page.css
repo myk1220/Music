@@ -20,9 +20,8 @@ body{
 
 .index-page > .index-bg {
     background: url(../img/index-bg.jpg);
-    height:6.67rem;
     text-align: center;
-    line-height: 6.67rem;
+    height: 100%;
 }
 .index-page > .index-bg-blur {
     position: fixed;
@@ -362,9 +361,8 @@ body{
 }
 .playList-page > .playList-bg {
     background: url(../img/index-bg.jpg);
-    height:6.67rem;
+    height: 100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .playList-page > .playList-bg-blur {
     position: fixed;
@@ -532,9 +530,8 @@ body{
 }
 .Album-page > .Album-bg {
     background: url(../img/index-bg.jpg);
-    height:6.67rem;
+    height: 100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .Album-page > .Album-bg-blur {
     position: fixed;
@@ -701,9 +698,8 @@ body{
 }
 .language-page > .language-bg {
     background: url(../img/index-bg.jpg);
-    height:6.67rem;
+    height: 100%;
     text-align: center;
-    line-height: 6.67rem;
 }
 .language-page > .language-bg-blur {
     position: fixed;
