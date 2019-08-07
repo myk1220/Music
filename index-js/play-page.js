@@ -40,8 +40,9 @@
         renderdata(songinfo){
             $(this.el).find('.songName').html(songinfo.name);
             $(this.el).find('.singer').html(songinfo.singer);
+            $(this.el).find('.playalbum').css('background-image','url(img/'+songinfo.imgsrc+')');
             $(this.el).find('audio').attr('src',songinfo.link);
-            $(this.el).find('.control-Song-wrap').html('<div id="pause-Song" class="control-Song"></div>')
+            $(this.el).find('.control-Song-wrap').html('<div id="pause-Song" class="control-Song"></div>');
         },
     }
 
@@ -50,7 +51,8 @@
             current_playsong:{
                 name:'',
                 singer:'',
-                link:''
+                link:'',
+                imgsrc:'',
             },
             rotateData:{
                 timer:{},
@@ -64,6 +66,7 @@
                 this.data.current_playsong.name=song.get('name');
                 this.data.current_playsong.singer=song.get('singer');
                 this.data.current_playsong.link=song.get('link');
+                this.data.current_playsong.imgsrc=song.get('imgsrc');
             }); 
         }
     }
@@ -78,6 +81,7 @@
                 $(this.view.el).css("display","block");
                 this.model.getSongInfo(song).then(()=>{
                     this.view.renderdata(this.model.data.current_playsong);
+                    // this.total_time();
                     this.first_play();
                     this.play_paused();
                     this.playsonglist_pageBack();
@@ -93,6 +97,19 @@
                 }, 500);
             });
         },
+
+        // total_time(){
+        //     let m=0;
+        //     let s=0;
+        //     let totaltime=$(this.view.el).find('audio')[0].duration;
+        //     console.log(totaltime);
+        //     let totaltime_m=Math.floor(totaltime/60);
+        //     if(totaltime_m<10){m='0'+totaltime_m}else{m=totaltime_m};
+        //     if(totaltime_s<10){s='0'+totaltime_s}else{s=totaltime_s};
+        //     console.log(m+'2'+s);
+        //     let totaltime_s=Math.floor(totaltime%60);
+        //     $(this.view.el).find('#totalTime').html(m+':'+s);
+        // },
 
         first_play(){
             clearInterval(model.data.rotateData.timer);

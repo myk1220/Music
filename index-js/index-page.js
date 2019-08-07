@@ -90,6 +90,7 @@
             });
         },
         getId(data){
+            console.log(this.data.hotsongs);
             for(let i=0;i<this.data.hotsongs.length;i++){
                 if(data===this.data.hotsongs[i].name){
                     return this.data.hotsongs[i].id;
