@@ -90,10 +90,13 @@ body{
     height: 2.2rem;
     margin-bottom: 0.18rem;
 }
+.index-page > .index-wrap > .index-content > .swiper-container-singer > .swiper-wrapper > div{
+    cursor: pointer;
+}
 .index-page > .index-wrap > .index-content > .swiper-container-singer > .swiper-wrapper > div > img{
     width: 100%;
     height: 100%;
-    cursor: pointer;
+    pointer-events: none;
 }
 
 /* -----album css----- */
@@ -829,3 +832,226 @@ body{
     color: rgba(143,142,148,1);
     pointer-events: none;
 }
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/*----- play page css -----*/
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+.play-page{
+    display: none;
+    width: 100%;
+    color:rgba(255,255,255,1);
+    font-size: 0.17rem;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: 8;
+}
+.play-page > .play-page-wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.play-page > .play-page-wrap > .play-bg {
+    background-image: url(../img/index-bg.jpg);
+    height: 100%;
+    text-align: center;
+}
+.play-page > .play-page-wrap > .play-bg-blur {
+    position: fixed;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(1px);
+    z-index: -1;
+}
+.play-page > .play-page-wrap >.play-wrap{
+    width: 100%;
+    height: 2.47rem;
+}
+.play-page > .play-page-wrap >.play-wrap > .play-head{
+    width: 100%;
+    height: 0.64rem;
+    padding: 0.3rem 0 0.12rem;
+    position: relative;
+}
+.play-page > .play-page-wrap >.play-wrap > .play-head > .play-back{
+    font-weight:300;
+    color:rgba(255,149,0,1);
+    position: absolute;
+    left:0.16rem;
+    cursor: pointer;
+    line-height: 0.25rem;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.play-page > .play-page-wrap >.play-wrap > .play-head > .play-back::before{
+    content: '';
+    background-image: url(../img/back.svg);
+    width: 0.25rem;
+    height: 0.25rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    float: left;
+    margin-right: 0.05rem;
+}
+
+.play-page > .play-page-wrap >.play-wrap > .play-head > a:hover{
+    color: rgb(253, 253, 253);
+}
+.play-page > .play-page-wrap >.play-wrap > .play-head > p{
+    font-weight:600;
+    display: inline-block;
+}
+.play-page > .play-page-wrap > .playalbum-wrap{
+    width:2.49rem;
+    height:2.49rem;
+    background-image: url(../img/album-bg-pic.png);
+    background-size: contain;
+    background-position: center center;
+    border-radius:50%;
+    position: absolute;
+    top:0.9rem;
+    left: 0.63rem;
+}
+.play-page > .play-page-wrap > .playalbum-wrap >.playalbum{
+    margin: 0 auto;
+    width:1.58rem;
+    height:1.58rem;
+    background-image: url(../img/album.jpg);
+    background-size: contain;
+    background-position: center center;
+    border-radius:50%;
+    margin-top: 0.45rem;
+}
+@keyframes move{
+    from{transform: rotate(0)}
+    to{transform: rotate(360deg)}
+}
+.play-page > .play-page-wrap > .playalbum-wrap >.playalbum.active{
+    animation: move 12s linear infinite;
+}
+
+/* -----songInfo css----- */
+.play-page > .play-page-wrap > .songInfo{
+    width: 80%;
+    height: 0.66rem;
+    margin: 1rem auto 0.1rem;
+}
+.play-page > .play-page-wrap > .songInfo > .songName{
+
+font-size:0.28rem;
+font-weight:500;
+
+}
+.play-page > .play-page-wrap > .songInfo > .singer{
+    font-size:0.15rem;
+    font-weight:400;
+    color:rgba(234,234,237,1);
+}
+
+/* -----lyric css----- */
+.play-page > .play-page-wrap > .lyric{
+    width: 80%;
+    height: 1rem;
+    background-color: red;
+    margin:0 auto 0.25rem;
+}
+
+
+/* -----progressBar css----- */
+
+.play-page > .play-page-wrap > .progressBar-wrap{
+    margin: 0 0.16rem 0 0.16rem;
+    position: relative;
+    height: 0.26rem;
+    line-height: 0.26rem;
+}
+.play-page > .play-page-wrap > .progressBar-wrap > #passTime{
+    position: absolute;
+    left: 0;
+    font-size: 0.15rem;
+    font-weight: 400;
+    color:rgba(122,121,128,1);
+}
+.play-page > .play-page-wrap > .progressBar-wrap > #totalTime{
+    position: absolute;
+    right:0;
+    font-size: 0.15rem;
+    font-weight: 400;
+    color:rgb(151, 150, 158);
+}
+.play-page > .play-page-wrap > .progressBar-wrap > .progressBar-total{
+    width: 2.4rem;
+    background:rgba(63,62,68,1);
+    height: 0.06rem;
+    position: absolute;
+    top: 0.10rem;
+    left:0.5rem ;
+    border-radius: 0.05rem;
+}
+.play-page > .play-page-wrap > .progressBar-wrap > .progressBar-passed{
+    width: 0.4rem;
+    background: white;
+    height: 0.06rem;
+    position: absolute;
+    background:rgba(255,149,0,1);
+    top: 0.10rem;
+    left:0.5rem ;
+    border-radius: 0.05rem;
+}
+
+/* -----progressBar css----- */
+
+.play-page > .play-page-wrap > .control-button{
+    width: 60%;
+    height: 0.8rem;
+    margin: 0 auto;
+    position: relative;
+}
+.play-page > .play-page-wrap > .control-button >div{
+    cursor: pointer;
+}
+#prev-Song{
+    background-image: url(../img/prev.svg);
+    background-size: cover;
+    background-position: center center;
+    width:40px;
+    height:30px;
+    position: absolute;
+    top: 0.25rem;
+} 
+#play-Song{
+    background-image: url(../img/play.svg);
+    background-size: cover;
+    background-position: center center;
+    width:40px;
+    height:30px;
+    position: absolute;
+    top: 0.25rem;
+    left: 0.95rem;
+} 
+#pause-Song{
+    background-image: url(../img/pause.svg);
+    background-size: cover;
+    background-position: center center;
+    width:40px;
+    height:30px;
+    position: absolute;
+    top: 0.25rem;
+    left: 0.95rem;
+} 
+#next-Song{
+    background-image: url(../img/next.svg);
+    background-size: cover;
+    background-position: center center;
+    width:40px;
+    height:30px;
+    position: absolute;
+    top: 0.25rem;
+    right: 0;
+} 

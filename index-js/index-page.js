@@ -12,9 +12,9 @@
             <div class="index-content">
                 <div class="swiper-container swiper-container-singer">
                     <div id="singer-swiper" class="swiper-wrapper">
-                    <div class="swiper-slide" singer_id="The Score"><img src="img/the Score.jpg" alt="图片加载失败"></div>
-                    <div class="swiper-slide" singer_id="Imagine Dragons"><img src="img/imagindragon1.jpg" alt="图片加载失败"></div>
-                    <div class="swiper-slide" singer_id="Maroon 5"><img src="img/maroon5.jpg" alt="图片加载失败"></div>
+                        <div class="swiper-slide" singer_id="The Score"><img src="img/the Score.jpg" alt="图片加载失败"></div>
+                        <div class="swiper-slide" singer_id="Imagine Dragons"><img src="img/imagindragon1.jpg" alt="图片加载失败"></div>
+                        <div class="swiper-slide" singer_id="Maroon 5"><img src="img/maroon5.jpg" alt="图片加载失败"></div>
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
@@ -68,7 +68,7 @@
                 $(this.el).find('.sign-in > p').html('Log In');
             }
             for(let j=0;j<data.hotsongs.length;j++){
-                let $li=$('<li class="hot-songsLi"><p class="hot-songs-list-name">'+data.hotsongs[j].name+'</p><p class="hot-songs-list-singer">'+data.hotsongs[j].singer+'</p></li>');
+                let $li=$('<li class="hot-songsLi" hotsong_id="'+data.hotsongs[j].name+'"><p class="hot-songs-list-name">'+data.hotsongs[j].name+'</p><p class="hot-songs-list-singer">'+data.hotsongs[j].singer+'</p></li>');
                 $(this.el).find('.hot-songsUl').append($li);
             }
         }
@@ -84,12 +84,18 @@
             song.equalTo('hotSong', 'hot');
             song.select(['name', 'singer']);
             return song.find().then(function (hotsong) {
-                for(let i=0;i<hotsong.length;i++){
-                    model.data.hotsongs.push(hotsong[i].attributes);
-                }
-                return model.data.hotsongs;
+                model.data.hotsongs=hotsong.map((info)=>{
+                    return {id:info.id, ...info.attributes}
+                });
             });
         },
+        getId(data){
+            for(let i=0;i<this.data.hotsongs.length;i++){
+                if(data===this.data.hotsongs[i].name){
+                    return this.data.hotsongs[i].id;
+                }
+            }
+        }
         
     }
 
@@ -111,7 +117,8 @@
                     this.logIn();
                     this.singerTo_playlist();
                     this.singerTo_albumlist();
-                    this.singerTo_languagelist()
+                    this.singerTo_languagelist();
+                    this.singerTo_playsonglist();
                     window.eventHub.on('playList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
@@ -119,6 +126,9 @@
                         $(this.view.el).show().animate({'left':0},500);                
                     });
                     window.eventHub.on('language-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    });
+                    window.eventHub.on('playsongList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });
@@ -131,7 +141,8 @@
                     this.logIn();
                     this.singerTo_playlist();
                     this.singerTo_albumlist();
-                    this.singerTo_languagelist()
+                    this.singerTo_languagelist();
+                    this.singerTo_playsonglist();
                     window.eventHub.on('playList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
@@ -139,6 +150,9 @@
                         $(this.view.el).show().animate({'left':0},500);                
                     });
                     window.eventHub.on('language-back',()=>{
+                        $(this.view.el).show().animate({'left':0},500);                
+                    });
+                    window.eventHub.on('playsongList-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });
@@ -175,7 +189,7 @@
         },
 
         singerTo_playlist(){
-            $(this.view.el).find('#singer-swiper').on('click','div',function(e){
+            $(this.view.el).find('#singer-swiper').on('click','.swiper-slide',function(e){
                 window.eventHub.emmit('singer-playlist',e.currentTarget.getAttribute('singer_id'));
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
@@ -193,6 +207,16 @@
         singerTo_languagelist(){
             $(this.view.el).find('#language-swiper').on('click','.languge',function(e){
                 window.eventHub.emmit('singer-languagelist',e.currentTarget.getAttribute('language_id'));
+                $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
+                    $(view.el).hide()
+                });
+            })
+        },
+        singerTo_playsonglist(){
+            $(this.view.el).find('.hot-songsUl').on('click','li',function(e){
+                let name=e.currentTarget.getAttribute('hotsong_id');
+                let data=model.getId(name);
+                window.eventHub.emmit('current-playlist',data);
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
                 });
