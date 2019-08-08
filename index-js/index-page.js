@@ -216,7 +216,6 @@
             $(this.view.el).find('.hot-songsUl').on('click','li',function(e){
                 let name=e.currentTarget.getAttribute('hotsong_id');
                 model.data.username=model.getId(name);
-                console.log(model.data);
                 let data=model.data;
                 window.eventHub.emmit('current-playlist',data);
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{

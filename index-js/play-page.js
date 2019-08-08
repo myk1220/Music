@@ -44,6 +44,12 @@
             $(this.el).find('audio').attr('src',songinfo.link);
             $(this.el).find('.control-button').html('<div id="prev-Song"></div><div class="control-Song-wrap"><div id="play-Song" class="control-Song"></div></div><div id="next-Song"></div></div>');
         },
+        renderSong(songinfo){
+            $(this.el).find('.songName').html(songinfo.name);
+            $(this.el).find('.singer').html(songinfo.singer);
+            $(this.el).find('.playalbum').css('background-image','url(img/'+songinfo.imgsrc+')');
+            $(this.el).find('audio').attr('src',songinfo.link);  
+        }
     }
 
     let model={
@@ -110,10 +116,7 @@
                 };
                 model.data.current_playsong.id=this.model.data.playList[index];
                 this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
-                    $(this.view.el).find('.songName').html(model.data.current_playsong.name);
-                    $(this.view.el).find('.singer').html(model.data.current_playsong.singer);
-                    $(this.view.el).find('.playalbum').css('background-image','url(img/'+model.data.current_playsong.imgsrc+')');
-                    $(this.view.el).find('audio').attr('src',model.data.current_playsong.link);
+                    this.view.renderSong(this.model.data.current_playsong);
                     $(this.view.el).find('.control-Song').attr('id','play-Song');
                     this.initialization();  
                 })
@@ -129,10 +132,7 @@
                 };
                 model.data.current_playsong.id=this.model.data.playList[index];
                 this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
-                    $(this.view.el).find('.songName').html(model.data.current_playsong.name);
-                    $(this.view.el).find('.singer').html(model.data.current_playsong.singer);
-                    $(this.view.el).find('.playalbum').css('background-image','url(img/'+model.data.current_playsong.imgsrc+')');
-                    $(this.view.el).find('audio').attr('src',model.data.current_playsong.link);
+                    this.view.renderSong(this.model.data.current_playsong);
                     $(this.view.el).find('.control-Song').attr('id','play-Song');
                     this.initialization();  
                 })
