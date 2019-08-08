@@ -67,8 +67,8 @@
                 $(this.el).find('.sign-out').removeClass('sign-out').addClass('sign-in');
                 $(this.el).find('.sign-in > p').html('Log In');
             }
-            for(let j=0;j<data.hotsongs.length;j++){
-                let $li=$('<li class="hot-songsLi" hotsong_id="'+data.hotsongs[j].name+'"><p class="hot-songs-list-name">'+data.hotsongs[j].name+'</p><p class="hot-songs-list-singer">'+data.hotsongs[j].singer+'</p></li>');
+            for(let j=0;j<data.songlist.length;j++){
+                let $li=$('<li class="hot-songsLi" hotsong_id="'+data.songlist[j].name+'"><p class="hot-songs-list-name">'+data.songlist[j].name+'</p><p class="hot-songs-list-singer">'+data.songlist[j].singer+'</p></li>');
                 $(this.el).find('.hot-songsUl').append($li);
             }
         }
@@ -76,7 +76,7 @@
 
     let model={
         data:{
-            hotsongs:[],
+            songlist:[],
             username:''
         },
         getHotsongs(){
@@ -84,16 +84,15 @@
             song.equalTo('hotSong', 'hot');
             song.select(['name', 'singer']);
             return song.find().then(function (hotsong) {
-                model.data.hotsongs=hotsong.map((info)=>{
+                model.data.songlist=hotsong.map((info)=>{
                     return {id:info.id, ...info.attributes}
                 });
             });
         },
         getId(data){
-            console.log(this.data.hotsongs);
-            for(let i=0;i<this.data.hotsongs.length;i++){
-                if(data===this.data.hotsongs[i].name){
-                    return this.data.hotsongs[i].id;
+            for(let i=0;i<this.data.songlist.length;i++){
+                if(data===this.data.songlist[i].name){
+                    return this.data.songlist[i].id;
                 }
             }
         }
@@ -216,7 +215,9 @@
         singerTo_playsonglist(){
             $(this.view.el).find('.hot-songsUl').on('click','li',function(e){
                 let name=e.currentTarget.getAttribute('hotsong_id');
-                let data=model.getId(name);
+                model.data.username=model.getId(name);
+                console.log(model.data);
+                let data=model.data;
                 window.eventHub.emmit('current-playlist',data);
                 $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
                     $(view.el).hide()
