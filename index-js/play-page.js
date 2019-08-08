@@ -28,7 +28,7 @@
         <div class="control-button">
             <div id="prev-Song"></div>
             <div class="control-Song-wrap">
-                <div id="play-Song" class="control-Song"></div>
+                <div id="pause-Song" class="control-Song"></div>
             </div>
             <div id="next-Song"></div>
         </div>
@@ -42,7 +42,7 @@
             $(this.el).find('.singer').html(songinfo.singer);
             $(this.el).find('.playalbum').css('background-image','url(img/'+songinfo.imgsrc+')');
             $(this.el).find('audio').attr('src',songinfo.link);
-            $(this.el).find('.control-button').html('<div id="prev-Song"></div><div class="control-Song-wrap"><div id="play-Song" class="control-Song"></div></div><div id="next-Song"></div></div>');
+            $(this.el).find('.control-button').html('<div id="prev-Song"></div><div class="control-Song-wrap"><div id="pause-Song" class="control-Song"></div></div><div id="next-Song"></div></div>');
         },
         renderSong(songinfo){
             $(this.el).find('.songName').html(songinfo.name);
@@ -92,24 +92,28 @@
             this.model=model;
             this.view.render();
             window.eventHub.on('current-playlist',(song)=>{
-                this.model.data.playList=song.songlist.map((song)=>{
-                    return song.id;
-                });
-                this.model.data.current_playsong.id=song.username;
-                $(this.view.el).css("display","block");
-                    this.model.getSongInfo(song.username).then(()=>{
-                        this.view.renderdata(this.model.data.current_playsong);
-                        this.initialization();
-                        this.play_paused();
-                        this.playsonglist_pageBack();
-                        this.next_song();
-                        this.prev_song();
-                    })
+                if(song.username===this.model.data.current_playsong.id){
+                    $(this.view.el).css("display","block");
+                }else{
+                    this.model.data.playList=song.songlist.map((song)=>{
+                        return song.id;
+                    });
+                    this.model.data.current_playsong.id=song.username;
+                    $(this.view.el).css("display","block");
+                        this.model.getSongInfo(song.username).then(()=>{
+                            this.view.renderdata(this.model.data.current_playsong);
+                            this.initialization();
+                            this.play_paused();
+                            this.playsonglist_pageBack();
+                            this.next_song();
+                            this.prev_song();
+                        })
+                }
             })
         },
 
         next_song(){
-            $(view.el).find('#next-Song').click(()=>{
+            $(this.view.el).find('#next-Song').click(()=>{
                 let index=this.model.data.playList.indexOf(this.model.data.current_playsong.id)+1;
                 if(index===this.model.data.playList.length){
                     index=0;
@@ -117,15 +121,15 @@
                 model.data.current_playsong.id=this.model.data.playList[index];
                 this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
                     this.view.renderSong(this.model.data.current_playsong);
-                    $(this.view.el).find('.control-Song').attr('id','play-Song');
-                    this.initialization();  
+                    $(this.view.el).find('.control-Song').attr('id','pause-Song');
+                    this.auto_play();
                 })
 
             })
         },
 
         prev_song(){
-            $(view.el).find('#prev-Song').click(()=>{
+            $(this.view.el).find('#prev-Song').click(()=>{
                 let index=this.model.data.playList.indexOf(this.model.data.current_playsong.id)-1;
                 if(index===-1){
                     index=this.model.data.playList.length-1;
@@ -133,15 +137,34 @@
                 model.data.current_playsong.id=this.model.data.playList[index];
                 this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
                     this.view.renderSong(this.model.data.current_playsong);
-                    $(this.view.el).find('.control-Song').attr('id','play-Song');
-                    this.initialization();  
+                    $(this.view.el).find('.control-Song').attr('id','pause-Song');
+                    this.auto_play();
                 })
 
             })
         },
 
+        auto_play(){  
+            this.initialization(); 
+        },
+
+        auto_next(){
+            if($(this.view.el).find('audio')[0].ended){
+                let index=this.model.data.playList.indexOf(this.model.data.current_playsong.id)-1;
+                if(index===-1){
+                    index=this.model.data.playList.length-1;
+                };
+                model.data.current_playsong.id=this.model.data.playList[index];
+                this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
+                    this.view.renderSong(this.model.data.current_playsong);
+                    $(this.view.el).find('.control-Song').attr('id','pause-Song');
+                    this.auto_play();
+                })
+            }
+        },
+
         playsonglist_pageBack(){
-            $(view.el).find('.play-back').click(()=>{
+            $(this.view.el).find('.play-back').click(()=>{
                 window.eventHub.emmit('playsongList-back');
                 setTimeout(() => {
                     $(this.view.el).css("display","none")              
@@ -150,24 +173,31 @@
         },
 
         total_time(){
-            let totaltime=$(this.view.el).find('audio')[0].duration;
+            let getkey=setInterval(()=>{
+                if(document.querySelector('audio').duration){
+                    clearInterval(getkey);
+                    let totaltime=document.querySelector('audio').duration;
+                    let totaltime_m=Math.floor(totaltime/60);
+                    let totaltime_s=Math.floor(totaltime%60);
+                    if(totaltime_m<10){this.model.data.playTime.total_m='0'+totaltime_m}else{this.model.data.playTime.total_m=totaltime_m};
+                    if(totaltime_s<10){this.model.data.playTime.total_s='0'+totaltime_s}else{this.model.data.playTime.total_s=totaltime_s};
+                    $(this.view.el).find('#totalTime').html(this.model.data.playTime.total_m+':'+this.model.data.playTime.total_s);
+        
+                    this.model.data.time['total_timer']=setInterval(()=>{         
+                        this.auto_next();
+                        let totaltime=document.querySelector('audio').duration;
+                        let currenttime=document.querySelector('audio').currentTime;
+                        let passedPro=currenttime/totaltime;
+                        let currenttime_m=Math.floor(currenttime/60);
+                        let currenttime_s=Math.floor(currenttime%60);
+                        if(currenttime_m<10){this.model.data.playTime.current_m='0'+currenttime_m}else{this.model.data.playTime.current_m=currenttime_m};
+                        if(currenttime_s<10){this.model.data.playTime.current_s='0'+currenttime_s}else{this.model.data.playTime.current_s=currenttime_s};
+                        $(this.view.el).find('#passTime').html(this.model.data.playTime.current_m+':'+this.model.data.playTime.current_s);
+                        $(this.view.el).find('.progressBar-passed').css("width",(2.4*passedPro)+"rem");
+                    },1000)
+                }
+            },5)
 
-            let totaltime_m=Math.floor(totaltime/60);
-            let totaltime_s=Math.floor(totaltime%60);
-            if(totaltime_m<10){this.model.data.playTime.total_m='0'+totaltime_m}else{this.model.data.playTime.total_m=totaltime_m};
-            if(totaltime_s<10){this.model.data.playTime.total_s='0'+totaltime_s}else{this.model.data.playTime.total_s=totaltime_s};
-            $(this.view.el).find('#totalTime').html(this.model.data.playTime.total_m+':'+this.model.data.playTime.total_s);
-
-            this.model.data.time['total_timer']=setInterval(()=>{
-                let currenttime=$(this.view.el).find('audio')[0].currentTime;
-                let passedPro=currenttime/totaltime;
-                let currenttime_m=Math.floor(currenttime/60);
-                let currenttime_s=Math.floor(currenttime%60);
-                if(currenttime_m<10){this.model.data.playTime.current_m='0'+currenttime_m}else{this.model.data.playTime.current_m=currenttime_m};
-                if(currenttime_s<10){this.model.data.playTime.current_s='0'+currenttime_s}else{this.model.data.playTime.current_s=currenttime_s};
-                $(this.view.el).find('#passTime').html(this.model.data.playTime.current_m+':'+this.model.data.playTime.current_s);
-                $(this.view.el).find('.progressBar-passed').css("width",(2.4*passedPro)+"rem");
-            },1000)
         },
 
         initialization(){
@@ -177,7 +207,10 @@
             $(this.view.el).find('.progressBar-passed').css("width",0);
             model.data.rotateData.Ndeg=0;
             model.data.rotateData.canBegin=true;   
-            this.clear();    
+            this.clear();
+            document.querySelector('audio').play();  
+            this.albumrotate();
+            this.total_time();   
         },
 
         clear(){
@@ -208,10 +241,10 @@
                     $(this.view.el).find('.playalbum').css('transform','rotate('+deg+'deg)');
                 }, 10);
 
-                model.data.rotateData.canBegin = false;
+                this.model.data.rotateData.canBegin = false;
             } else {
                 clearInterval(model.data.rotateData.timer);
-                model.data.rotateData.canBegin = true;
+                this.model.data.rotateData.canBegin = true;
                 }
         }
     }
