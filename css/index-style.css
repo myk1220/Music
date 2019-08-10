@@ -200,13 +200,10 @@ body{
 .signIn-page >.signIn-wrap > .signIn-content > .signIn-form > div > #CreatAccount{
     font-size:0.16rem;
     font-weight:400;
-    color:rgba(234,234,237,1);
+    color:#FF9500;
     cursor: pointer;
     transition: all .3s;
 
-}
-.signIn-page >.signIn-wrap > .signIn-content > .signIn-form > div > #CreatAccount:hover{
-    color: #FF9500;
 }
 
 /*----- sign Up css -----*/

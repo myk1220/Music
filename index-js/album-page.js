@@ -38,7 +38,7 @@
             $(this.el).find('.Album-pic>img').attr('src','img/'+albuminfo.imgsrc);
             $(this.el).find('.Album-songlist-ul').html('');
             for(let i=0;i<data.length;i++){
-                let $li=$('<li class="Album-songlist-ul-li"><p class="Album-songlist-name">'+data[i].name+'</p><p class="Album-songlist-singer">'+data[i].singer+'</p></li>');
+                let $li=$('<li class="Album-songlist-ul-li" albumsong_id="'+data[i].name+'"><p class="Album-songlist-name">'+data[i].name+'</p><p class="Album-songlist-singer">'+data[i].singer+'</p></li>');
                 $(this.el).find('.Album-songlist-ul').append($li);                
             }
         }
@@ -46,20 +46,21 @@
 
     let model={
         data:{
-            albumPlayList:[],
+            songlist:[],
             albumInfo:{},
+            username:'',
+            page_Identifier:'album'
         },
 
         getalbumlist(albumname){
-            this.data.albumPlayList=[];
+            this.data.songlist=[];
             var song = new AV.Query('Music');
             song.equalTo('album', albumname);
             song.select(['name', 'singer']);
-            return song.find().then(function (albumplaylist) {
-                for(let i=0;i<albumplaylist.length;i++){
-                    model.data.albumPlayList.push(albumplaylist[i].attributes);
-                }
-                return model.data.albumPlayList;
+            return song.find().then(function (songlist) {
+                model.data.songlist=songlist.map((info)=>{
+                    return {id:info.id, ...info.attributes}
+                });
             });            
         },
 
@@ -72,6 +73,14 @@
                 model.data.albumInfo=albuminfo[0].attributes;
                 return model.data.albumInfo;
             });            
+        },
+
+        getId(data){
+            for(let i=0;i<this.data.songlist.length;i++){
+                if(data===this.data.songlist[i].name){
+                    return this.data.songlist[i].id;
+                }
+            }
         }
 
     }
@@ -89,7 +98,11 @@
                     this.model.getalbuminfo(albumname).then(()=>{
                         this.view.render();
                         this.albumlist_pageBack();
-                        this.view.renderdata(this.model.data.albumPlayList,this.model.data.albumInfo)                     
+                        this.view.renderdata(this.model.data.songlist,this.model.data.albumInfo)                     
+                        this.singerTo_playsonglist();
+                        window.eventHub.on('playsongList-back_album',()=>{
+                            $(this.view.el).show().animate({'left':0},500);                
+                        })
                     })
                 })
             });
@@ -101,7 +114,18 @@
                     $(this.view.el).css("display","none")              
                 }, 500);
             });
-        }
+        },
+        singerTo_playsonglist(){
+            $(this.view.el).find('.Album-songlist-ul').on('click','li',function(e){
+                let name=e.currentTarget.getAttribute('albumsong_id');
+                model.data.username=model.getId(name);
+                let data=model.data;
+                window.eventHub.emmit('current-playlist',data);
+                $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
+                    $(view.el).hide()
+                });
+            })
+        },
     }
     controler.init(view,model);
 }

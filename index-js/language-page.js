@@ -30,7 +30,7 @@
             $(this.el).find('.language-pic').css("background-image","url(img/"+languageinfo.imgsrc+")");
             $(this.el).find('.language-pic').html(languageinfo.content);
             for(let i=0;i<data.length;i++){
-                let $li=$('<li class="language-songlist-ul-li"><p class="language-songlist-name">'+data[i].name+'</p><p class="language-songlist-singer">'+data[i].singer+'</p></li>');
+                let $li=$('<li class="language-songlist-ul-li" languagesong_id="'+data[i].name+'"><p class="language-songlist-name">'+data[i].name+'</p><p class="language-songlist-singer">'+data[i].singer+'</p></li>');
                 $(this.el).find('.language-songlist-ul').append($li);
             }
         }
@@ -38,20 +38,21 @@
 
     let model={
         data:{
-            languagePlayList:[],
+            songlist:[],
             languageInfo:{},
+            username:'',
+            page_Identifier:'language'
         },
 
         getlanguagelist(languagename){
-            this.data.languagePlayList=[];
+            this.data.songlist=[];
             var song = new AV.Query('Music');
             song.equalTo('songType', languagename);
             song.select(['name', 'singer']);
-            return song.find().then(function (languageplaylist) {
-                for(let i=0;i<languageplaylist.length;i++){
-                    model.data.languagePlayList.push(languageplaylist[i].attributes);
-                }
-                return model.data.languagePlayList;
+            return song.find().then(function (songlist) {
+                model.data.songlist=songlist.map((info)=>{
+                    return {id:info.id, ...info.attributes}
+                });
             });            
         },
 
@@ -64,6 +65,14 @@
                 model.data.languageInfo=languageinfo[0].attributes;
                 return model.data.languageInfo;
             });            
+        },
+
+        getId(data){
+            for(let i=0;i<this.data.songlist.length;i++){
+                if(data===this.data.songlist[i].name){
+                    return this.data.songlist[i].id;
+                }
+            }
         }
 
     }
@@ -81,11 +90,16 @@
                     this.model.getlanguageinfo(languagename).then(()=>{
                         this.view.render();
                         this.languagelist_pageBack();
-                        this.view.renderdata(this.model.data.languagePlayList,this.model.data.languageInfo)                     
+                        this.view.renderdata(this.model.data.songlist,this.model.data.languageInfo)                     
+                        this.singerTo_playsonglist()
+                        window.eventHub.on('playsongList-back_language',()=>{
+                            $(this.view.el).show().animate({'left':0},500);                
+                        })
                     })
                 })
             });
         },
+
         languagelist_pageBack(){
             $(view.el).find('.language-back').click(()=>{
                 window.eventHub.emmit('language-back');
@@ -93,7 +107,19 @@
                     $(this.view.el).css("display","none")              
                 }, 500);
             });
-        }
+        },
+
+        singerTo_playsonglist(){
+            $(this.view.el).find('.language-songlist-ul').on('click','li',function(e){
+                let name=e.currentTarget.getAttribute('languagesong_id');
+                model.data.username=model.getId(name);
+                let data=model.data;
+                window.eventHub.emmit('current-playlist',data);
+                $(view.el).animate({'left':'-'+$(document).width()+'px'},500,()=>{
+                    $(view.el).hide()
+                });
+            })
+        },
     }
     controler.init(view,model);
 }

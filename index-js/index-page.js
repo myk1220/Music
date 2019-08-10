@@ -77,7 +77,8 @@
     let model={
         data:{
             songlist:[],
-            username:''
+            username:'',
+            page_Identifier:'index'
         },
         getHotsongs(){
             var song = new AV.Query('Music');
@@ -128,7 +129,7 @@
                     window.eventHub.on('language-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
-                    window.eventHub.on('playsongList-back',()=>{
+                    window.eventHub.on('playsongList-back_index',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });
@@ -152,7 +153,8 @@
                     window.eventHub.on('language-back',()=>{
                         $(this.view.el).show().animate({'left':0},500);                
                     });
-                    window.eventHub.on('playsongList-back',()=>{
+                    window.eventHub.on('playsongList-back_index',()=>{
+                        console.log('1');
                         $(this.view.el).show().animate({'left':0},500);                
                     })
                 });

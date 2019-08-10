@@ -72,7 +72,8 @@
                 current_m:0,
                 current_s:0,
             },
-            playList:[]
+            playList:[],
+            page_Identifier:''
         },
         getSongInfo(songname){
             var song = new AV.Query('Music');
@@ -92,6 +93,7 @@
             this.model=model;
             this.view.render();
             window.eventHub.on('current-playlist',(song)=>{
+                this.model.data.page_Identifier=song.page_Identifier;
                 if(song.username===this.model.data.current_playsong.id){
                     $(this.view.el).css("display","block");
                 }else{
@@ -109,7 +111,7 @@
                             this.prev_song();
                         })
                 }
-            })
+            });
         },
 
         next_song(){
@@ -165,10 +167,36 @@
 
         playsonglist_pageBack(){
             $(this.view.el).find('.play-back').click(()=>{
-                window.eventHub.emmit('playsongList-back');
-                setTimeout(() => {
-                    $(this.view.el).css("display","none")              
-                }, 500);
+                switch(this.model.data.page_Identifier) {
+                    case 'index':
+                        window.eventHub.emmit('playsongList-back_index');
+                        setTimeout(() => {
+                            $(this.view.el).css("display","none")              
+                        }, 500);
+                       break;
+                    case 'singer':
+                        window.eventHub.emmit('playsongList-back_singer');
+                        setTimeout(() => {
+                            $(this.view.el).css("display","none")              
+                        }, 500);
+                       break;
+                    case 'album':
+                        window.eventHub.emmit('playsongList-back_album');
+                        setTimeout(() => {
+                            $(this.view.el).css("display","none")              
+                        }, 500);
+                    break;
+                    case 'language':
+                        window.eventHub.emmit('playsongList-back_language');
+                        setTimeout(() => {
+                            $(this.view.el).css("display","none")              
+                        }, 500);
+                    break;
+                    // default:
+                    //    默认代码块
+               } 
+
+
             });
         },
 
