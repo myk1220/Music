@@ -958,7 +958,7 @@ font-weight:500;
 .play-page > .play-page-wrap > .lyric{
     width: 80%;
     height: 1rem;
-    background-color: red;
+    /* background-color: red; */
     margin:0 auto 0.25rem;
 }
 
