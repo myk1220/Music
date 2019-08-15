@@ -18,7 +18,9 @@
             <p class="songName">Sugar</p>
             <p class="singer">Marron 5</p>
         </div>
-        <div class="lyric"></div>
+        <div class="lyric-wrap">
+            <div class="lyric"></div>
+        </div>
         <div class="progressBar-wrap">
             <p id="passTime">00:00</p>
             <div class="progressBar-total"></div>
@@ -36,6 +38,9 @@
         `,
         render(){
             $(this.el).html(this.template);
+            $(this.el).find('audio')[0].ontimeupdate=()=>{
+                controler.showlyric($(this.el).find('audio')[0].currentTime);
+            } 
         },
         renderdata(songinfo){
             $(this.el).find('.songName').html(songinfo.name);
@@ -48,7 +53,7 @@
             $(this.el).find('.songName').html(songinfo.name);
             $(this.el).find('.singer').html(songinfo.singer);
             $(this.el).find('.playalbum').css('background-image','url(img/'+songinfo.imgsrc+')');
-            $(this.el).find('audio').attr('src',songinfo.link);  
+            $(this.el).find('audio').attr('src',songinfo.link);
         }
     }
 
@@ -73,7 +78,36 @@
                 current_s:0,
             },
             playList:[],
-            page_Identifier:''
+            page_Identifier:'',
+            lyc:`[00:00.82]大鱼
+[00:01.91](动画电影《大鱼海棠》印象曲)
+[00:04.29]演唱：周深
+[00:05.39]作词：尹约
+[00:06.45]作曲：钱雷
+[00:43.16]海浪无声将夜幕深深淹没
+[00:50.01]漫过天空尽头的角落
+[00:56.64]大鱼在梦境的缝隙里游过
+[01:03.73]凝望你沉睡的轮廓
+[01:09.78]看海天一色 听风起雨落
+[01:16.50]执子手吹散苍茫茫烟波
+[01:23.62]大鱼的翅膀 已经太辽阔
+[01:31.11]我松开时间的绳索
+[01:37.26]怕你飞远去 怕你离我而去
+[01:44.18]更怕你永远停留在这里
+[01:50.85]每一滴泪水 都向你流淌去
+[01:58.61]倒流进天空的海底
+[02:19.44]海浪无声将夜幕深深淹没
+[02:26.01]漫过天空尽头的角落
+[02:32.89]大鱼在梦境的缝隙里游过
+[02:40.20]凝望你沉睡的轮廓
+[02:45.80]看海天一色 听风起雨落
+[02:52.58]执子手吹散苍茫茫烟波
+[02:59.50]大鱼的翅膀 已经太辽阔
+[03:07.16]我松开时间的绳索
+[03:13.17]看你飞远去 看你离我而去
+[03:19.99]原来你生来就属于天际
+[03:26.78]每一滴泪水 都向你流淌去
+[03:34.56]倒流回最初的相遇`
         },
         getSongInfo(songname){
             var song = new AV.Query('Music');
@@ -92,6 +126,7 @@
             this.view=view;
             this.model=model;
             this.view.render();
+            this.doLyric();
             window.eventHub.on('current-playlist',(song)=>{
                 this.model.data.page_Identifier=song.page_Identifier;
                 if(song.username===this.model.data.current_playsong.id){
@@ -112,6 +147,46 @@
                         })
                 }
             });
+        },
+
+        showlyric(time){
+            console.log(time);
+            for(let i=0;i< $(this.view.el).find('.lyric-wrap > .lyric > p').length;i++){
+                if(i==0){
+                    if(time<=$(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id')){
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:0},150);
+                        return;
+                    }
+                }else if(i==$(this.view.el).find('.lyric-wrap > .lyric > p').length-1){
+                    if(time>=$(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id')){
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-(27*22)+'px'},150);
+                        $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).siblings().removeClass('active');
+                        $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).addClass('active');
+                    }
+                }else{
+                    let current_tim = $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id');
+                    let next_tim = $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i+1).attr('time_id');
+                    if(time >= current_tim && time < next_tim){
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-(i*22)+'px'},150);
+                        $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).siblings().removeClass('active');
+                        $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).addClass('active');
+                    }
+                }
+            }    
+        },
+
+        doLyric(){
+            let reg=/\[([\d:.]+)\](.+)/;
+            let y=model.data.lyc.split("\n")
+            y.map((string)=>{
+                let p = string.match(reg);
+                let tim = p[1].split(':');
+                let min = tim[0];
+                let sec = tim[1];
+                let newTime = parseFloat(min) * 60 + parseFloat(sec);
+                $(this.view.el).find('.lyric').append($('<p time_id="'+newTime+'"></p>').html(p[2]));
+            });
+            $(this.view.el).find('.lyric > p:first-child').addClass('active');
         },
 
         next_song(){

@@ -955,11 +955,21 @@ font-weight:500;
 }
 
 /* -----lyric css----- */
-.play-page > .play-page-wrap > .lyric{
+.play-page > .play-page-wrap > .lyric-wrap{
     width: 80%;
     height: 1rem;
-    /* background-color: red; */
     margin:0 auto 0.25rem;
+    overflow: hidden;
+    color: #8F8E94;
+    position: relative;
+}
+.play-page > .play-page-wrap > .lyric-wrap > .lyric{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+.play-page > .play-page-wrap > .lyric-wrap > .lyric > .active{
+    color:rgba(255,149,0,1);
 }
 
 
