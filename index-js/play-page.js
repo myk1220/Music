@@ -127,12 +127,13 @@
             for(let i=0;i< $(this.view.el).find('.lyric-wrap > .lyric > p').length;i++){
                 if(i==0){
                     if(time<=$(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id')){
-                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:"0.42rem"},150);
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:"0.4rem"},100);
+                        $(this.view.el).find('.lyric > p').eq(i).addClass('active');
                         return;
                     }
                 }else if(i==$(this.view.el).find('.lyric-wrap > .lyric > p').length-1){
                     if(time>=$(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id')){
-                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-parseInt($(this.view.el).find('.lyric-wrap > .lyric').css('height'))+'rem'},150);
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-parseInt($(this.view.el).find('.lyric-wrap > .lyric').css('height'))+'rem'},100);
                         $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).siblings().removeClass('active');
                         $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).addClass('active');
                     }
@@ -140,7 +141,7 @@
                     let current_tim = $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).attr('time_id');
                     let next_tim = $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i+1).attr('time_id');
                     if(time >= current_tim && time < next_tim){
-                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-($(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).position().top*0.01-0.42)+'rem'},150);
+                        $(this.view.el).find('.lyric-wrap > .lyric').animate({top:-($(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).position().top*0.01-0.4)+'rem'},100);
                         $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).siblings().removeClass('active');
                         $(this.view.el).find('.lyric-wrap > .lyric > p').eq(i).addClass('active');
                     }
@@ -160,7 +161,6 @@
                 let newTime = parseFloat(min) * 60 + parseFloat(sec);
                 $(this.view.el).find('.lyric').append($('<p time_id="'+newTime+'"></p>').html(p[2]));
             });
-            $(this.view.el).find('.lyric > p:first-child').addClass('active');
         },
 
         next_song(){
@@ -207,7 +207,8 @@
                 this.model.getSongInfo(this.model.data.playList[index]).then(()=>{
                     this.view.renderSong(this.model.data.current_playsong);
                     $(this.view.el).find('.control-Song').attr('id','pause-Song');
-                    this.auto_play();
+                    this.initialization();
+                    this.doLyric(); 
                 })
             }
         },
