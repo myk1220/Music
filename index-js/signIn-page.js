@@ -69,6 +69,19 @@
                 return userinfo;
             });
         },
+        creatdata(data){
+            var User = AV.Object.extend('userInfo');
+            var user = new User();
+            user.set('username', data.newUserInfo.username);
+            user.set('password', data.newUserInfo.password);
+            user.set('emailAdress',data.newUserInfo.emailAdress);
+            user.save().then(function (newUser) {
+                alert('创建成功');
+                controler.pageOff();
+            }, function (error) {
+                console.error(error);
+            });
+        },
 
     }
 
