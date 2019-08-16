@@ -966,6 +966,7 @@ font-weight:500;
 .play-page > .play-page-wrap > .lyric-wrap > .lyric{
     position: absolute;
     width: 100%;
+    top:0.42rem;
     text-align: center;
 }
 .play-page > .play-page-wrap > .lyric-wrap > .lyric > .active{
